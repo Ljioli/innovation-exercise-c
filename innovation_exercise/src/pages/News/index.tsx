@@ -182,7 +182,7 @@ const News: React.FC = () => {
         <Card className="news-content">
           <BreadcrumbComponent
             items={[
-              { label: '新闻资讯', path: '/news' },
+              { label: '新闻资讯', clickable: false},
               {
                 label: activeType === '1' ? '时政新闻' : '热门赛事',
                 isActive: true

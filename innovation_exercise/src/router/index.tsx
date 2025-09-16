@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 const Login = lazy(() => import('@/pages/Login'))
 const Layout = lazy(() => import('@/pages/Layout'))
 const News = lazy(() => import('@/pages/News'))
+const NewsDetail = lazy(() => import('@/pages/News/newsDetail'))
 const Index = lazy(() => import('@/pages/Index'))
 const Notice = lazy(() => import('@/pages/Notice'))
 const NoticeDetail = lazy(() => import('@/pages/Notice/noticeDetail'))
@@ -46,7 +47,7 @@ const routes: RouteObject[] = [
             path:'politics/:id',
             element: (
               <Suspense fallback={'加载中'}>
-                <News />
+                <NewsDetail />
               </Suspense>
             )
           },
@@ -54,7 +55,7 @@ const routes: RouteObject[] = [
             path:'sports/:id',
             element: (
               <Suspense fallback={'加载中'}>
-                <News />
+                <NewsDetail />
               </Suspense>
             )
           }
@@ -63,15 +64,31 @@ const routes: RouteObject[] = [
       {
         path: 'government',
         children: [
-          { path: 'policy', element: <Notice /> },
-          { path: 'inform', element: <Notice /> },
+          { path: 'policy', element: (
+            <Suspense fallback={'加载中'}>
+              <Notice />
+            </Suspense>
+          ) },
+          { path: 'inform', element: (
+            <Suspense fallback={'加载中'}>
+              <Notice />
+            </Suspense>
+          ) },
           {
             path: 'policy/:id',
-            element: <NoticeDetail />
+            element: (
+              <Suspense fallback={'加载中'}>
+                <NoticeDetail />
+              </Suspense>
+            )
           },
           {
             path: 'inform/:id',
-            element: <NoticeDetail />
+            element: (
+              <Suspense fallback={'加载中'}>
+                <NoticeDetail />
+              </Suspense>
+            )
           }
         ]
       },
