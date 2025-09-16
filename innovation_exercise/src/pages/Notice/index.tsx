@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Breadcrumb, Menu, List, Typography, Pagination } from 'antd'
 import { HomeOutlined, FileTextOutlined, BellOutlined } from '@ant-design/icons'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 import './index.scss'
 
 // 定义通知公告数据类型
@@ -119,10 +120,8 @@ const Notice: React.FC = () => {
     return activeKey === '3' ? policyData : noticeData
   }
 
-  // 获取当前页面标题
-  const getPageTitle = () => {
-    return activeKey === '3' ? '政策法规' : '通知公告'
-  }
+
+
 
   // 导航项点击处理
   const handleMenuClick = (e: { key: string }) => {
@@ -142,22 +141,18 @@ const Notice: React.FC = () => {
 
   return (
     <div className="government-container">
-      {/* 顶部导航栏 */}
       <header className="header">
         <div className="container">
           <div className="breadcrumb-container">
-            <Breadcrumb separator=">">
-              <Breadcrumb.Item>
-                <Link to="/">
-                  <HomeOutlined className="home-icon" />
-                  首页
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>政务公开</Breadcrumb.Item>
-              <Breadcrumb.Item className="active-breadcrumb">
-                {getPageTitle()}
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <BreadcrumbComponent
+              items={[
+                { label: '政务公开', path: '/government' },
+                {
+                  label: activeKey === '3' ? '政策法规' : '通知公告',
+                  isActive: true
+                }
+              ]}
+            />
           </div>
         </div>
       </header>

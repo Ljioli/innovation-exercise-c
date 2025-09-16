@@ -4,9 +4,10 @@ import {
   HomeOutlined,
   FileTextOutlined,
   BellOutlined,
-  CalendarOutlined,
+  CalendarOutlined
 } from '@ant-design/icons'
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
+import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 import './noticeDetail.scss'
 
 // 定义通知详情数据类型
@@ -40,7 +41,9 @@ const NoticeDetail: React.FC = () => {
   }
 
   const [activeKey, setActiveKey] = useState<'3' | '4'>('3')
-  const [noticeDetail, setNoticeDetail] = useState<NoticeDetailItem | null>(null)
+  const [noticeDetail, setNoticeDetail] = useState<NoticeDetailItem | null>(
+    null
+  )
 
   // 政策和通知标题数据
   const policyTitles = [
@@ -54,7 +57,7 @@ const NoticeDetail: React.FC = () => {
     { id: 8, title: '安徽省体育类民办非企业单位登记管理办法' },
     { id: 9, title: '安徽省体育彩票公益金使用管理办法' },
     { id: 10, title: '安徽省青少年体育训练大纲' }
-  ];
+  ]
 
   const noticeTitles = [
     { id: 1, title: '关于举办2025年安徽省青少年体育夏令营的通知' },
@@ -67,7 +70,7 @@ const NoticeDetail: React.FC = () => {
     { id: 8, title: '安徽省体育产业发展专项资金申报通知' },
     { id: 9, title: '关于做好2025年下半年体育彩票销售工作的通知' },
     { id: 10, title: '安徽省体育局关于开展体育系统安全生产检查的通知' }
-  ];
+  ]
 
   // 模拟详情内容生成
   const generateMockContent = (title: string) => `
@@ -90,7 +93,7 @@ const NoticeDetail: React.FC = () => {
   // 初始化数据
   useEffect(() => {
     const currentType = getTypeFromPath()
-    
+
     // 根据类型确定激活的导航项
     if (currentType === 'policy') {
       setActiveKey('3')
@@ -100,47 +103,61 @@ const NoticeDetail: React.FC = () => {
 
     // 模拟API请求获取详情数据
     setTimeout(() => {
-      if (!id) return;
-      
-      const numericId = parseInt(id, 10);
-      const isPolicy = currentType === 'policy';
-      
+      if (!id) return
+
+      const numericId = parseInt(id, 10)
+      const isPolicy = currentType === 'policy'
+
       // 根据ID查找对应的标题
       const titleItem = isPolicy
-        ? policyTitles.find(item => item.id === numericId)
-        : noticeTitles.find(item => item.id === numericId);
-      
-      const title = titleItem?.title || `${isPolicy ? '政策法规' : '通知公告'}文件（第${id}号）`;
+        ? policyTitles.find((item) => item.id === numericId)
+        : noticeTitles.find((item) => item.id === numericId)
+
+      const title =
+        titleItem?.title ||
+        `${isPolicy ? '政策法规' : '通知公告'}文件（第${id}号）`
 
       // 发布时间数组
       const policyDates = [
-        '2025-09-03', '2025-08-25', '2025-08-18', '2025-08-10', '2025-07-28', 
-        '2025-07-15', '2025-07-05', '2025-06-28', '2025-06-18', '2025-06-10'
-      ];
-      
+        '2025-09-03',
+        '2025-08-25',
+        '2025-08-18',
+        '2025-08-10',
+        '2025-07-28',
+        '2025-07-15',
+        '2025-07-05',
+        '2025-06-28',
+        '2025-06-18',
+        '2025-06-10'
+      ]
+
       const noticeDates = [
-        '2025-09-05', '2025-09-01', '2025-08-28', '2025-08-20', '2025-08-15', 
-        '2025-08-10', '2025-08-05', '2025-07-30', '2025-07-25', '2025-07-20'
-      ];
+        '2025-09-05',
+        '2025-09-01',
+        '2025-08-28',
+        '2025-08-20',
+        '2025-08-15',
+        '2025-08-10',
+        '2025-08-05',
+        '2025-07-30',
+        '2025-07-25',
+        '2025-07-20'
+      ]
 
       const mockDetail: NoticeDetailItem = {
         id: numericId,
         title,
-        publishTime: isPolicy 
+        publishTime: isPolicy
           ? policyDates[numericId - 1] || new Date().toISOString().split('T')[0]
-          : noticeDates[numericId - 1] || new Date().toISOString().split('T')[0],
+          : noticeDates[numericId - 1] ||
+            new Date().toISOString().split('T')[0],
         source: '安徽省体育局官网',
         content: generateMockContent(title)
       }
-      
+
       setNoticeDetail(mockDetail)
     }, 300)
   }, [location.pathname, id])
-
-  // 获取页面标题
-  const getPageTitle = () => {
-    return activeKey === '3' ? '政策法规' : '通知公告'
-  }
 
   // 导航菜单点击处理
   const handleMenuClick = (e: { key: string }) => {
@@ -159,25 +176,16 @@ const NoticeDetail: React.FC = () => {
       <header className="header">
         <div className="container">
           <div className="breadcrumb-container">
-            <Breadcrumb separator=">">
-              <Breadcrumb.Item>
-                <Link to="/">
-                  <HomeOutlined className="home-icon" />
-                  首页
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>政务公开</Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <Link
-                  to={`/government/${activeKey === '3' ? 'policy' : 'inform'}`}
-                >
-                  {getPageTitle()}
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item className="active-breadcrumb">
-                正文
-              </Breadcrumb.Item>
-            </Breadcrumb>
+            <BreadcrumbComponent
+              items={[
+                { label: '政务公开', path: '/government' },
+                {
+                  label: activeKey === '3' ? '政策法规' : '通知公告',
+                  path: `/government/${activeKey === '3' ? 'policy' : 'inform'}`
+                },
+                { label: '正文', isActive: true }
+              ]}
+            />
           </div>
         </div>
       </header>
@@ -203,10 +211,7 @@ const NoticeDetail: React.FC = () => {
             >
               政策法规
             </Menu.Item>
-            <Menu.Item
-              key="4"
-              icon={<BellOutlined className="menu-icon" />}
-            >
+            <Menu.Item key="4" icon={<BellOutlined className="menu-icon" />}>
               通知公告
             </Menu.Item>
           </Menu>

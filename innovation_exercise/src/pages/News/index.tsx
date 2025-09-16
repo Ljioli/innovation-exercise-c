@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { Card, Typography, Divider, Row, Col, Menu, Breadcrumb } from 'antd'
 import {
   ClockCircleOutlined,
-  FireOutlined,
   FlagOutlined,
   TrophyOutlined,
   ArrowRightOutlined,
   HomeOutlined
 } from '@ant-design/icons'
 import './index.scss'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 
 const { Title, Text, Paragraph } = Typography
 const { Item: BreadcrumbItem } = Breadcrumb
@@ -180,16 +180,15 @@ const News: React.FC = () => {
       {/* 右侧内容区 */}
       <Col xs={24} md={18} lg={19} xl={20}>
         <Card className="news-content">
-          {/* 面包屑导航 */}
-          <Breadcrumb separator=">">
-            <BreadcrumbItem href="/">
-              <HomeOutlined /> 首页
-            </BreadcrumbItem>
-            <BreadcrumbItem href="/news">新闻资讯</BreadcrumbItem>
-            <BreadcrumbItem>
-              {activeType === '1' ? '时政新闻' : '热门赛事'}
-            </BreadcrumbItem>
-          </Breadcrumb>
+          <BreadcrumbComponent
+            items={[
+              { label: '新闻资讯', path: '/news' },
+              {
+                label: activeType === '1' ? '时政新闻' : '热门赛事',
+                isActive: true
+              }
+            ]}
+          />
 
           {/* 页面标题 */}
           <div className="page-title">
@@ -202,46 +201,51 @@ const News: React.FC = () => {
           {/* 新闻列表 */}
           <div className="news-list">
             {filteredNews.map((news) => (
-              <Card key={news.id} className="news-item" hoverable>
-                <Row gutter={[24, 0]}>
-                  <Col xs={24} md={8} lg={7}>
-                    <div className="news-image-container">
-                      <img
-                        src={news.cover}
-                        alt={news.title}
-                        className="news-image"
-                      />
-                    </div>
-                  </Col>
-
-                  <Col xs={24} md={16} lg={17}>
-                    <div className="news-info">
-                      <div className="news-header">
-                        <Title level={4} className="news-title">
-                          {news.title}
-                        </Title>
+              <Link
+                key={news.id}
+                to={`/news/${activeType === '1' ? 'politics' : 'sports'}/${news.id}`}
+              >
+                <Card key={news.id} className="news-item" hoverable>
+                  <Row gutter={[24, 0]}>
+                    <Col xs={24} md={8} lg={7}>
+                      <div className="news-image-container">
+                        <img
+                          src={news.cover}
+                          alt={news.title}
+                          className="news-image"
+                        />
                       </div>
+                    </Col>
 
-                      <Paragraph
-                        className="news-summary"
-                        ellipsis={{ rows: 2 }}
-                      >
-                        {news.content}
-                      </Paragraph>
-
-                      <div className="news-meta">
-                        <div className="news-date">
-                          <ClockCircleOutlined />
-                          <Text>{news.publishTime}</Text>
+                    <Col xs={24} md={16} lg={17}>
+                      <div className="news-info">
+                        <div className="news-header">
+                          <Title level={4} className="news-title">
+                            {news.title}
+                          </Title>
                         </div>
-                        <a href={`#/news/${news.id}`} className="read-more">
-                          阅读全文 <ArrowRightOutlined />
-                        </a>
+
+                        <Paragraph
+                          className="news-summary"
+                          ellipsis={{ rows: 2 }}
+                        >
+                          {news.content}
+                        </Paragraph>
+
+                        <div className="news-meta">
+                          <div className="news-date">
+                            <ClockCircleOutlined />
+                            <Text>{news.publishTime}</Text>
+                          </div>
+                          <a href={`#/news/${news.id}`} className="read-more">
+                            阅读全文 <ArrowRightOutlined />
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
+                    </Col>
+                  </Row>
+                </Card>
+              </Link>
             ))}
           </div>
         </Card>
