@@ -8,6 +8,7 @@ interface BreadcrumbItem {
   label: string;
   path?: string;
   isActive?: boolean;
+  clickable?: boolean; 
 }
 
 interface BreadcrumbComponentProps {
@@ -17,10 +18,9 @@ interface BreadcrumbComponentProps {
 const BreadcrumbComponent: React.FC<BreadcrumbComponentProps> = ({ items }) => {
   return (
     <Breadcrumb separator=">">
-      {/* 首页固定项 */}
       <Breadcrumb.Item>
         <Link to="/">
-          <HomeOutlined className="home-icon" />
+          <HomeOutlined/>
           首页
         </Link>
       </Breadcrumb.Item>
@@ -31,7 +31,7 @@ const BreadcrumbComponent: React.FC<BreadcrumbComponentProps> = ({ items }) => {
           key={index}
           className={item.isActive ? 'active-breadcrumb' : ''}
         >
-          {item.path ? (
+          {item.path && item.clickable !== false ? (
             <Link to={item.path}>{item.label}</Link>
           ) : (
             item.label

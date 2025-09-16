@@ -151,7 +151,7 @@ const NoticeDetail: React.FC = () => {
           ? policyDates[numericId - 1] || new Date().toISOString().split('T')[0]
           : noticeDates[numericId - 1] ||
             new Date().toISOString().split('T')[0],
-        source: '安徽省体育局官网',
+        source: '河北省体育局官网',
         content: generateMockContent(title)
       }
 
@@ -178,7 +178,7 @@ const NoticeDetail: React.FC = () => {
           <div className="breadcrumb-container">
             <BreadcrumbComponent
               items={[
-                { label: '政务公开', path: '/government' },
+                { label: '政务公开', clickable: false },
                 {
                   label: activeKey === '3' ? '政策法规' : '通知公告',
                   path: `/government/${activeKey === '3' ? 'policy' : 'inform'}`

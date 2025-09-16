@@ -146,7 +146,7 @@ const Notice: React.FC = () => {
           <div className="breadcrumb-container">
             <BreadcrumbComponent
               items={[
-                { label: '政务公开', path: '/government' },
+                { label: '政务公开',clickable: false   },
                 {
                   label: activeKey === '3' ? '政策法规' : '通知公告',
                   isActive: true
