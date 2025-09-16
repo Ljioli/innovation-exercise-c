@@ -1,0 +1,68 @@
+.ant-splitter {
+  background-color: white;
+  border-radius: 10px;
+}
+.ant-tabs-tab-btn {
+  font-size: large;
+  font-weight: 700;
+}
+.ant-tabs-nav {
+  margin: 0 !important;
+}
+.responsive-image {
+  width: 100%;
+  height: 315px;
+  border-radius: 10px 0 0 10px;
+}
+
+.caption-overlay {
+  border-radius: 10px 0 0 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // padding: 16px;
+  background: rgba(245, 245, 245, 0.85);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.caption-content {
+  max-width: 100%;
+  padding: 0 16px;
+  .caption-title {
+    color: #333;
+    font-size: 1.2rem;
+  }
+}
+
+.list-item {
+  padding: 11px 0 !important;
+  font-size: medium;
+  // border-bottom: 1px solid #f0f0f0 !important;
+
+  .list-date {
+    flex-shrink: 0; // 防止时间被挤压
+    font-size: 0.85em;
+    // margin-left: auto;
+    margin-right: 20px;
+  }
+}
+.ant-list-item .list-title {
+  color: black !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 12px;
+  &:hover {
+    color: #1890ff !important;
+  }
+}
+
+.tab-container {
+  background-color: white;
+  border-radius: 8px;
+  // padding: 16px;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding-left: 18px;
+}

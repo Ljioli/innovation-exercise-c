@@ -1,0 +1,122 @@
+.venue-open-page {
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      margin-bottom: 12px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .filter-label {
+        margin-right: 8px;
+        font-weight: 500;
+      }
+    }
+
+    .search-item {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .venue-list {
+    margin-bottom: 30px;
+
+    .venue-card {
+      max-height: calc(100vh - 300px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .ant-card-cover {
+        position: relative;
+        height: 150px;
+        padding: 0;
+        margin: 0;
+      }
+
+      .venue-card-image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .ant-tag {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 1;
+      }
+
+      .ant-card-body {
+        padding: 12px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .venue-name {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .venue-info {
+        flex: 1;
+
+        .info-item {
+          display: flex;
+          align-items: center;
+          font-size: 12px;
+          color: #888;
+          margin-bottom: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          .anticon {
+            margin-right: 6px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    padding-top: 10px;
+  }
+
+  // 响应式调整
+  @media (max-width: 768px) {
+    .filter-bar {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .filter-item {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      .search-item {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
+  }
+}
