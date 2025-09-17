@@ -9,8 +9,6 @@ import {
   SaveOutlined,
   RollbackOutlined,
   HeartOutlined,
-  LineChartOutlined,
-  TrophyOutlined,
   FireOutlined,
   DashboardOutlined,
   ManOutlined,
@@ -27,7 +25,7 @@ import {
   Select,
   InputNumber,
   message,
-  Divider,
+  Typography,
   Statistic,
   Row,
   Col,
@@ -35,6 +33,7 @@ import {
   Tag
 } from 'antd'
 import './index.scss'
+const { Title } = Typography
 
 // 定义用户信息类型接口
 interface UserInfo {
@@ -182,35 +181,6 @@ const User: React.FC = () => {
                   <HomeOutlined /> 地址：{userInfo.address || '未填写'}
                 </p>
               </div>
-
-              {!editing ? (
-                <Button
-                  type="primary"
-                  icon={<EditOutlined />}
-                  onClick={handleEdit}
-                  className="edit-btn"
-                >
-                  编辑信息
-                </Button>
-              ) : (
-                <div className="edit-actions">
-                  <Button
-                    type="primary"
-                    icon={<SaveOutlined />}
-                    onClick={handleSave}
-                    className="save-btn"
-                  >
-                    保存
-                  </Button>
-                  <Button
-                    icon={<RollbackOutlined />}
-                    onClick={handleCancel}
-                    className="cancel-btn"
-                  >
-                    取消
-                  </Button>
-                </div>
-              )}
             </div>
 
             <div className="fitness-stats-overview">
@@ -318,7 +288,39 @@ const User: React.FC = () => {
             key="details"
           >
             <Card className="details-card">
-              <h3 className="section-title">身体信息</h3>
+              {/* 标题与编辑按钮容器 */}
+              <div className="title-with-action">
+                <h3 className="section-title">身体信息</h3>
+                {!editing ? (
+                  <Button
+                    type="primary"
+                    icon={<EditOutlined />}
+                    onClick={handleEdit}
+                    className="edit-btn"
+                  >
+                    编辑信息
+                  </Button>
+                ) : (
+                  <div className="edit-actions">
+                    <Button
+                      type="primary"
+                      icon={<SaveOutlined />}
+                      onClick={handleSave}
+                      className="save-btn"
+                    >
+                      保存
+                    </Button>
+                    <Button
+                      icon={<RollbackOutlined />}
+                      onClick={handleCancel}
+                      className="cancel-btn"
+                    >
+                      取消
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <Descriptions
                 column={2}
                 bordered
@@ -378,7 +380,7 @@ const User: React.FC = () => {
 
               {editing && (
                 <div className="additional-edit-fields">
-                  <h3 className="section-title">编辑基本信息</h3>
+                  <Title level={3} className="section-title">编辑基本信息</Title>
                   <Form form={form} layout="vertical" className="edit-form">
                     <Row gutter={24}>
                       <Col span={12}>
