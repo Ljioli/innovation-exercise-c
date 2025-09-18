@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Card, Row, Col, Typography, Tabs, Table, Descriptions } from 'antd'
 import {
@@ -8,9 +8,27 @@ import {
   TeamOutlined
 } from '@ant-design/icons'
 import './venueDetail.scss'
+import VenueMap from './components/VenueMap'
 
 const { Title } = Typography
 const { TabPane } = Tabs
+
+
+// 引入基础的Venue接口定义
+interface Venue {
+  id: number
+  name: string
+  address: string
+  openingHours: string
+  phone: string
+  type: string
+  image: string
+  province: string
+  city: string
+  operator?: string
+  year?: string
+  area?: string
+}
 
 // 扩展场馆数据类型
 interface VenueDetail extends Venue {
@@ -43,10 +61,12 @@ interface Facility {
 }
 
 // 模拟场馆详情数据
-const mockVenueDetails: Record<number, VenueDetail> = {
-  1: {
+const mockVenueDetails: Record<number, VenueDetail> = 
+
+{
+    1: {
     id: 1,
-    name: '河北省体育馆',
+    name: '河北体育馆',
     address: '石家庄市长安区中山东路338号',
     openingHours: '06:00-22:00',
     phone: '0311-85918888',
@@ -108,24 +128,160 @@ const mockVenueDetails: Record<number, VenueDetail> = {
         lastCheck: '2023-10-08'
       }
     ]
+  },
+  2: {
+    id: 2,
+    name: '河北奥体中心主体育场',
+    address: '石家庄市长安区中山东路211号', // 修正地址
+    openingHours: '全天开放', // 修正开放时间
+    phone: '0311-86688888', // 修正电话
+    type: '户外健身区', // 修正类型
+    image: 'https://picsum.photos/800/500?random=2',
+    province: '河北省',
+    city: '石家庄市',
+    operator: '石家庄市市政管理处', // 修正运营单位
+    year: '2010', // 修正建成年份
+    area: '8000', // 修正建筑面积
+    outerFreeArea: '3000',
+    venueArea: '8000',
+    outerArea: '5000',
+    outerFreeCount: '8',
+    coreFreeArea: '4000',
+    hasOutdoorArea: '是',
+    coreArea: '3000',
+    coreFreeCount: '5',
+    landArea: '15000',
+    seatNum: '2000',
+    superior: '石家庄市体育局',
+    description:
+      '河北奥体中心主体育场建于2010年，是集户外健身、体育训练为一体的体育场地，全天向市民开放，提供便捷的健身服务。',
+    facilities: [
+      {
+        id: 201,
+        name: '健身路径',
+        image: 'https://picsum.photos/100/100?random=201',
+        quantity: 5,
+        availableCount: 5,
+        type: '户外器材',
+        lastCheck: '2023-10-12'
+      },
+      {
+        id: 202,
+        name: '足球场',
+        image: 'https://picsum.photos/100/100?random=202',
+        quantity: 2,
+        availableCount: 2,
+        type: '户外场地',
+        lastCheck: '2023-10-08'
+      },
+      {
+        id: 203,
+        name: '网球场',
+        image: 'https://picsum.photos/100/100?random=203',
+        quantity: 4,
+        availableCount: 3,
+        type: '户外场地',
+        lastCheck: '2023-10-05'
+      }
+    ]
+  },
+  3: {
+    id: 3,
+    name: '石家庄市新华区文体中心体育综合馆',
+    address: '河北省石家庄市新华区北苑街道钟旺路15号',
+    openingHours: '08:00-21:00',
+    phone: '010-84375088',
+    type: '综合体育馆',
+    image: 'https://picsum.photos/800/500?random=3',
+    province: '北京市',
+    city: '北京市',
+    operator: '国家体育总局',
+    year: '2008',
+    area: '143000',
+    outerFreeArea: '20000',
+    venueArea: '143000',
+    outerArea: '30000',
+    outerFreeCount: '15',
+    coreFreeArea: '80000',
+    hasOutdoorArea: '是',
+    coreArea: '113000',
+    coreFreeCount: '20',
+    landArea: '300000',
+    seatNum: '30000',
+    superior: '国家体育总局',
+    description:
+      '北京奥林匹克体育中心建于2008年，是北京奥运会重要场馆之一，赛后向公众开放，提供各类体育健身服务。',
+    facilities: [
+      {
+        id: 301,
+        name: '田径场',
+        image: 'https://picsum.photos/100/100?random=301',
+        quantity: 1,
+        availableCount: 1,
+        type: '田径器材',
+        lastCheck: '2023-10-10'
+      },
+      {
+        id: 302,
+        name: '游泳馆',
+        image: 'https://picsum.photos/100/100?random=302',
+        quantity: 1,
+        availableCount: 1,
+        type: '水上设施',
+        lastCheck: '2023-10-05'
+      }
+    ]
+  },
+  4: {
+    id: 4,
+    name: '石家庄市鹿泉区篮球馆',
+    address: '河北省石家庄市鹿泉区获鹿镇乡乡镇向阳大街街213号',
+    openingHours: '07:30-22:00',
+    phone: '021-64385200',
+    type: '综合体育馆',
+    image: 'https://picsum.photos/800/500?random=4',
+    province: '上海市',
+    city: '上海市',
+    operator: '上海市体育局',
+    year: '1975',
+    area: '106000',
+    outerFreeArea: '15000',
+    venueArea: '106000',
+    outerArea: '25000',
+    outerFreeCount: '10',
+    coreFreeArea: '60000',
+    hasOutdoorArea: '是',
+    coreArea: '81000',
+    coreFreeCount: '15',
+    landArea: '200000',
+    seatNum: '18000',
+    superior: '上海市体育局',
+    description:
+      '上海体育馆建于1975年，是上海重要的综合性体育场馆，可举办各类体育赛事和文艺演出，常年向市民开放。',
+    facilities: [
+      {
+        id: 401,
+        name: '羽毛球馆',
+        image: 'https://picsum.photos/100/100?random=401',
+        quantity: 12,
+        availableCount: 10,
+        type: '球类',
+        lastCheck: '2023-10-12'
+      },
+      {
+        id: 402,
+        name: '健身房',
+        image: 'https://picsum.photos/100/100?random=402',
+        quantity: 1,
+        availableCount: 1,
+        type: '健身中心',
+        lastCheck: '2023-10-08'
+      }
+    ]
   }
+  
 }
 
-// 引入基础的Venue接口定义
-interface Venue {
-  id: number
-  name: string
-  address: string
-  openingHours: string
-  phone: string
-  type: string
-  image: string
-  province: string
-  city: string
-  operator?: string
-  year?: string
-  area?: string
-}
 
 const VenueDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -332,6 +488,11 @@ const VenueDetail: React.FC = () => {
           rowKey="id"
           pagination={{ pageSize: 10 }}
         />
+      </Card>
+
+      {/* 第三部分：地图定位 */}
+      <Card className="map-card" title="场馆位置">
+        <VenueMap venueName={venue.name} />
       </Card>
     </div>
   )

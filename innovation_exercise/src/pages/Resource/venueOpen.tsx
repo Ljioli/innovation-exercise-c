@@ -37,7 +37,7 @@ interface Venue {
 const venueData: Venue[] = [
   {
     id: 1,
-    name: '河北省体育馆',
+    name: '河北体育馆',
     address: '石家庄市长安区中山东路338号',
     openingHours: '06:00-22:00',
     phone: '0311-85918888',
@@ -51,7 +51,7 @@ const venueData: Venue[] = [
   },
   {
     id: 2,
-    name: '石家庄市人民广场健身区',
+    name: '河北奥体中心主体育场',
     address: '石家庄市长安区中山东路211号',
     openingHours: '全天开放',
     phone: '0311-86688888',
@@ -65,8 +65,8 @@ const venueData: Venue[] = [
   },
   {
     id: 3,
-    name: '北京奥林匹克体育中心',
-    address: '北京市朝阳区安定路1号',
+    name: '石家庄市新华区文体中心体育综合馆',
+    address: '河北省石家庄市新华区北苑街道钟旺路15号',
     openingHours: '08:00-21:00',
     phone: '010-84375088',
     type: '综合体育馆',
@@ -79,8 +79,8 @@ const venueData: Venue[] = [
   },
   {
     id: 4,
-    name: '上海体育馆',
-    address: '上海市徐汇区漕溪北路111号',
+    name: '石家庄市鹿泉区篮球馆',
+    address: '河北省石家庄市鹿泉区获鹿镇乡乡镇向阳大街街213号',
     openingHours: '07:30-22:00',
     phone: '021-64385200',
     type: '综合体育馆',
