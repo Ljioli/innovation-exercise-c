@@ -1,6 +1,7 @@
 import { RouteObject } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-const Login = lazy(() => import('@/pages/Login'))
+const Login = lazy(() => import('@/pages/Login/login'))
+const Register = lazy(() => import('@/pages/Login/register'))
 const Layout = lazy(() => import('@/pages/Layout'))
 const News = lazy(() => import('@/pages/News'))
 const NewsDetail = lazy(() => import('@/pages/News/newsDetail'))
@@ -9,6 +10,9 @@ const Notice = lazy(() => import('@/pages/Notice'))
 const NoticeDetail = lazy(() => import('@/pages/Notice/noticeDetail'))
 const VenueOpen = lazy(() => import('@/pages/Resource/venueOpen'))
 const VenueDetail = lazy(() => import('@/pages/Resource/venueDetail'))
+const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity1'))
+// const FitnessCommunity = lazy(() => import('@/pages/Community/FitnessCommunity'))
+
 const User = lazy(() => import('@/pages/User'))
 
 const routes: RouteObject[] = [
@@ -114,6 +118,14 @@ const routes: RouteObject[] = [
         ]
       },
       {
+        path: 'community',
+        element: (
+          <Suspense fallback={'加载中'}>
+            <FitnessCommunity />
+          </Suspense>
+        )
+      },
+      {
         path: 'user',
         element: (
           <Suspense fallback={'加载中'}>
@@ -126,7 +138,11 @@ const routes: RouteObject[] = [
   {
     path: '/login',
     element: <Login />
-  }
+  },
+  {
+    path: '/register',
+    element: <Register />
+  },
 ]
 
 export default routes

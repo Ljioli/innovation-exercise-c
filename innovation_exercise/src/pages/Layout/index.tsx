@@ -1,11 +1,10 @@
 import React from 'react'
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import './index.scss'
+import NavComponent from '@/components/NavComponent'
 import { Input } from 'antd'
 import type { GetProps } from 'antd'
-import type { MenuProps } from 'antd'
-import { Menu, Col, Divider, Row, Typography, Space } from 'antd'
+import { Col, Divider, Row, Typography, Space } from 'antd'
 import { MailFilled, EnvironmentFilled } from '@ant-design/icons'
 const { Text, Link } = Typography
 type SearchProps = GetProps<typeof Input.Search>
@@ -13,72 +12,9 @@ const { Search } = Input
 const onSearch: SearchProps['onSearch'] = (value, _e, info) =>
   console.log(info?.source, value)
 
-type MenuItem = Required<MenuProps>['items'][number]
 const { Title } = Typography
-const items: MenuItem[] = [
-  {
-   label: <Link href="/">首页</Link>, 
-    key: '1'
-  },
-  {
-    label: '新闻资讯',
-    key: '2',
-    children: [
-      {
-        label: <Link href="/news/politics">时政新闻</Link>, 
-        key: '2-1'
-      },
-      {
-        label: <Link href="/news/sports">热门赛事</Link>,
-        key: '2-2'
-      }
-    ]
-  },
-{
-    label: '政务公开',
-    key: '3',
-    children: [
-      {
-        label: <Link href="/government/policy">政策法规</Link>,
-        key: '3-1'
-      },
-      {
-        label: <Link href="/government/inform">通知公告</Link>,
-        key: '3-2'
-      }
-    ]
-  },
-  {
-    label: '健身资源',
-    key: '4',
-    children: [
-      {
-        label: '15分钟健身圈',
-        key: '4-1'
-      },
-      {
-        label: <Link href="/resource/venue-open">场馆开放</Link>,
-        key: '4-2'
-      },
-      // {
-      //   label: <Link href="/resource/fitness-facility">健身设施</Link>,
-      //   key: '4-3'
-      // }
-    ]
-  },
-  {
-    label: <Link href="/user"> 个人中心</Link>,   
-    key: '5'
-  }
-]
 
 const Layout: React.FC = () => {
-  const [current, setCurrent] = useState('mail')
-
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e)
-    setCurrent(e.key)
-  }
   return (
     <div className="layout-container">
       <header className="header-container">
@@ -95,12 +31,9 @@ const Layout: React.FC = () => {
               <Search placeholder="input search text" onSearch={onSearch} />
             </div>
             <div className="login">
-              {/* <Link href="">登录</Link>
-              <Text>|</Text>
-              <Link href="">注册</Link> */}
               <Space split={<Divider type="vertical" />}>
-                <Typography.Link href="#">登录</Typography.Link>
-                <Typography.Link>注册</Typography.Link>
+                <Typography.Link href="/login">登录</Typography.Link>
+                <Typography.Link href="/register">注册</Typography.Link>
               </Space>
             </div>
           </div>
@@ -108,12 +41,7 @@ const Layout: React.FC = () => {
 
         {/* 导航栏 */}
         <nav className="nav-bar">
-          <Menu
-            onClick={onClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            items={items}
-          />
+          <NavComponent showAll={true} current="1" />
         </nav>
       </header>
 
@@ -126,7 +54,6 @@ const Layout: React.FC = () => {
 
       <footer>
         <div className="footer-container">
-          {/* <div className="footer-top"> */}
           <Row gutter={16}>
             {/* 联系我们 */}
             <Col span={7}>
@@ -206,7 +133,6 @@ const Layout: React.FC = () => {
           {/* </div> */}
           <Divider orientation="left"></Divider>
           {/* 版权标注 */}
-          {/* <div className="footer-bottom"> */}
           <Row style={{ textAlign: 'center' }}>
             <Col span={12} offset={6}>
               河北省全民健身平台
