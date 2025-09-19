@@ -11,12 +11,12 @@ import {
   Menu,
   message
 } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { LockOutlined, PhoneOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-const { Title } = Typography
+const { Title, Link } = Typography
 
 interface LoginFormValues {
-  username?: string
+  phone?: string
   password?: string
   remember?: string
 }
@@ -31,11 +31,13 @@ const Login: React.FC = () => {
     navigate('/')
   }
   return (
-    <div className="login-container">
-      <div className="login-bg">
-        <NavComponent></NavComponent>
-        <div className="login-form">
-          <Title level={2}>河北省全民健身服务平台</Title>
+    <div className="container">
+      <div className="bg">
+        <span className="title">河北省全民健身服务平台</span>
+        <NavComponent />
+
+        <div className="form">
+          <Title level={2}>登录</Title>
           <Form
             form={form}
             name="login"
@@ -43,16 +45,13 @@ const Login: React.FC = () => {
             onFinish={onFinish}
           >
             <Form.Item
-              name="username"
+              name="phone"
               rules={[
-                { required: true, message: '请输入手机号或用户名！' },
+                { required: true, message: '请输入手机号！' },
                 { pattern: /^1[3-9]\d{9}$/, message: '请输入有效手机号' }
               ]}
             >
-              <Input
-                prefix={<UserOutlined />}
-                placeholder="请输入手机号或用户名"
-              />
+              <Input prefix={<PhoneOutlined />} placeholder="请输入手机号" />
             </Form.Item>
             <Form.Item
               name="password"
@@ -80,7 +79,7 @@ const Login: React.FC = () => {
               <Button block type="primary" htmlType="submit">
                 登录
               </Button>
-              或者 <a href="/register">注册账号</a>
+              或者 <Link href="/register">注册账号</Link>
             </Form.Item>
           </Form>
         </div>
