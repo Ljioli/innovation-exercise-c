@@ -10,8 +10,7 @@ const Notice = lazy(() => import('@/pages/Notice'))
 const NoticeDetail = lazy(() => import('@/pages/Notice/noticeDetail'))
 const VenueOpen = lazy(() => import('@/pages/Resource/venueOpen'))
 const VenueDetail = lazy(() => import('@/pages/Resource/venueDetail'))
-const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity1'))
-// const FitnessCommunity = lazy(() => import('@/pages/Community/FitnessCommunity'))
+const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity'))
 
 const User = lazy(() => import('@/pages/User'))
 
@@ -48,7 +47,7 @@ const routes: RouteObject[] = [
             )
           },
           {
-            path:'politics/:id',
+            path: 'politics/:id',
             element: (
               <Suspense fallback={'加载中'}>
                 <NewsDetail />
@@ -56,7 +55,7 @@ const routes: RouteObject[] = [
             )
           },
           {
-            path:'sports/:id',
+            path: 'sports/:id',
             element: (
               <Suspense fallback={'加载中'}>
                 <NewsDetail />
@@ -68,16 +67,22 @@ const routes: RouteObject[] = [
       {
         path: 'government',
         children: [
-          { path: 'policy', element: (
-            <Suspense fallback={'加载中'}>
-              <Notice />
-            </Suspense>
-          ) },
-          { path: 'inform', element: (
-            <Suspense fallback={'加载中'}>
-              <Notice />
-            </Suspense>
-          ) },
+          {
+            path: 'policy',
+            element: (
+              <Suspense fallback={'加载中'}>
+                <Notice />
+              </Suspense>
+            )
+          },
+          {
+            path: 'inform',
+            element: (
+              <Suspense fallback={'加载中'}>
+                <Notice />
+              </Suspense>
+            )
+          },
           {
             path: 'policy/:id',
             element: (
@@ -142,7 +147,7 @@ const routes: RouteObject[] = [
   {
     path: '/register',
     element: <Register />
-  },
+  }
 ]
 
 export default routes
