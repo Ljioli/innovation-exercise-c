@@ -386,7 +386,7 @@ const VenueOpen: React.FC = () => {
       <Row gutter={[24, 24]} className="venue-list">
         {currentVenues.map((venue) => (
           <Col xs={24} sm={12} md={8} lg={6} key={venue.id}>
-            <Link href={`/resource/venue-detail/${venue.id}`}>
+            <Link href={`/resource/venue-detail/${venue.id}`} target="_blank">
               <Card
                 hoverable
                 className="venue-card"

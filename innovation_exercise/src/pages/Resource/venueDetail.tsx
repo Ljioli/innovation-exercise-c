@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, Row, Col, Typography, Tabs, Table, Descriptions } from 'antd'
+import { Card, Row, Col, Typography, Tabs, Table, Descriptions,Button } from 'antd'
 import {
   ClockCircleOutlined,
   EnvironmentOutlined,
@@ -9,10 +9,10 @@ import {
 } from '@ant-design/icons'
 import './venueDetail.scss'
 import VenueMap from './components/VenueMap'
+import VenueBooking from './components/VenueBooking'
 
 const { Title } = Typography
 const { TabPane } = Tabs
-
 
 // 引入基础的Venue接口定义
 interface Venue {
@@ -61,10 +61,8 @@ interface Facility {
 }
 
 // 模拟场馆详情数据
-const mockVenueDetails: Record<number, VenueDetail> = 
-
-{
-    1: {
+const mockVenueDetails: Record<number, VenueDetail> = {
+  1: {
     id: 1,
     name: '河北体育馆',
     address: '石家庄市长安区中山东路338号',
@@ -279,14 +277,13 @@ const mockVenueDetails: Record<number, VenueDetail> =
       }
     ]
   }
-  
 }
-
 
 const VenueDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const venueId = id ? parseInt(id, 10) : 1
   const venue = mockVenueDetails[venueId] || mockVenueDetails[1] // 默认显示第一个场馆
+  const [bookingVisible, setBookingVisible] = useState(false)
 
   // 设施表格列定义
   const facilityColumns = [
@@ -466,6 +463,17 @@ const VenueDetail: React.FC = () => {
                 <span className="info-label">运营单位：</span>
                 <span className="info-value">{venue.operator || '未知'}</span>
               </div>
+              <Button
+                type="primary"
+                onClick={() => setBookingVisible(true)}
+              >
+                预约场馆
+              </Button>
+              <VenueBooking
+                visible={bookingVisible}
+                onClose={() => setBookingVisible(false)}
+                venue={{ id: venue.id, name: venue.name, type: venue.type }}
+              />
             </div>
           </Col>
         </Row>
