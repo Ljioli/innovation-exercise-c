@@ -31,8 +31,8 @@ const Login: React.FC = () => {
     navigate('/')
   }
   return (
-    <div className="container">
-      <div className="bg">
+    <div className="login-container">
+      <div className="login-bg">
         <span className="title">河北省全民健身服务平台</span>
         <NavComponent />
 

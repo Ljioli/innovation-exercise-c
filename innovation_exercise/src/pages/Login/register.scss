@@ -3,9 +3,10 @@
 body {
   margin: 0;
 }
-
-.ant-input {
-  border-radius: 35px;
-  padding: 10px 25px;
-  background-color: rgba(255, 255, 255, 0.863);
+.form {
+  .ant-input {
+    border-radius: 35px;
+    padding: 10px 25px;
+    background-color: rgba(255, 255, 255, 0.863);
+  }
 }
