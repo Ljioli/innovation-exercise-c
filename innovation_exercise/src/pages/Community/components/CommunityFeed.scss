@@ -1,0 +1,238 @@
+.community-feed-container {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  position: relative;
+}
+
+.posts-list-container {
+  max-height: 100vh;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 3px;
+  }
+}
+
+.post-editor {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .upload-preview {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .upload-item {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #eee;
+
+      img,
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .remove-upload {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.post-editor-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.post-editor-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.post-card {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .ant-card-meta-title {
+    font-weight: 600;
+    margin-bottom: 5px !important;
+  }
+
+  .post-content {
+    word-break: break-word;
+
+    p {
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+  }
+
+  .post-tags {
+    margin: 8px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .post-images {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+  }
+
+  .post-videos {
+    margin: 10px 0;
+
+    .post-video {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 6px;
+    }
+  }
+
+  .action-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
+    &:hover {
+      color: #1890ff;
+    }
+  }
+}
+
+// 评论区抽屉样式
+
+
+.comment-drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.comment-post-preview {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+
+  .ant-card {
+    box-shadow: none;
+    border: 1px solid #f0f0f0;
+  }
+
+  .preview-content {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .preview-tags {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+  }
+}
+
+.comments-list {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+
+  .comment-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+
+    .comment-content {
+      flex: 1;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 8px;
+
+      .comment-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        padding: 0;
+        border: none;
+
+        .comment-author {
+          font-weight: 600;
+          font-size: 13px;
+        }
+
+        .comment-time {
+          font-size: 12px;
+          color: #888;
+        }
+      }
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .no-comments {
+    text-align: center;
+    color: #aaa;
+    padding: 40px 0;
+    font-size: 14px;
+  }
+}
+
+.comment-input-area {
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .comment-drawer {
+    .ant-drawer-content-wrapper {
+      width: 100% !important;
+      max-width: 400px;
+    }
+  }
+}
