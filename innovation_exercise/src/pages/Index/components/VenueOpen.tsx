@@ -3,6 +3,8 @@ import { Card, Col, Divider, Row, Tabs, Typography, Table } from 'antd'
 import type { TabsProps } from 'antd'
 import TotalTitle from './components/TotalTitle'
 import './VenueOpen.scss'
+// import ExerciseMap from './ExerciseMap'
+// import { url } from 'inspector'
 const { Title, Text } = Typography
 
 const VenueOpen: React.FC = () => {
@@ -40,55 +42,68 @@ const VenueOpen: React.FC = () => {
   const venueData = [
     {
       id: 1,
-      type: '1',
-      name: '青海省全民健身中心体育场',
-      location: '青海省·西宁市',
+      type: '2',
+      url: 'https://js365.org.cn/oss/js365/js365/upload/20220620/13117c9a27f940fb9095307d386a8be6.jpg',
+      name: '石家庄市新华区文体中心体育综合馆',
+      location: '河北省·石家庄市',
       visitors: 4598
     },
     {
       id: 2,
-      type: '1',
-      name: '利川市清源体育场',
-      location: '湖北省·恩施土家族苗族自治州',
+      type: '2',
+      url:'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
+      name: '河北体育馆',
+      location: '河北省石家庄市长安区广安街道中山东路338号',
       visitors: 4546
     },
     {
       id: 3,
-      type: '1',
-      name: '西宁市大通县体育场',
-      location: '青海省·西宁市',
+      type: '2',
+      url:'https://js365.org.cn/oss/js365/js365/upload/20220621/e76e1aa77d184d6bbaa643c4d32b2192.jpg',
+      name: '石家庄滑冰馆',
+      location: '河北省石家庄市长安区育才街道中山东路350号',
       visitors: 3862
     },
     {
       id: 4,
-      type: '1',
-      name: '平潭人民体育场',
-      location: '福建省·福州市',
+      type: '2',
+      url:'https://www.js365.org.cn/oss/js365/upload/20240725/fc5c888aeb514a94884f49f631d50ff9.jpg',
+      name: '石家庄市中山体育馆',
+      location: '河北省石家庄市桥西区维明街道自强路117号',
       visitors: 4377
     },
     {
       id: 5,
       type: '2',
-      name: '兰州奥体中心体育场',
-      location: '甘肃省·兰州市',
+      url:'https://js365.org.cn/oss/js365/js365/upload/20220714/d019cb5abda14242bfa92345e200bfd8.png',
+      name: '栾城区体育馆',
+      location: '河北省石家庄市栾城区栾城镇街道惠源路39号',
       visitors: 3726
+    },
+    {
+      id: 6,
+      type: '2',
+      url:'https://www.js365.org.cn/oss/js365/upload/20230717/b0ccdc0d860e4396985a3025b342d0f6.jpg',
+      name: '高新区气膜体育馆',
+      location: '河北省石家庄市石家庄高新技术产业开发区',
+      visitors: 3862
     }
   ]
 
   // 排行榜数据
   const rankingData = [
-    { rank: 4, region: '广东省', visitors: 97146 },
-    { rank: 5, region: '湖南省', visitors: 92591 },
-    { rank: 6, region: '云南省', visitors: 85451 },
-    { rank: 7, region: '陕西省', visitors: 83717 },
-    { rank: 8, region: '湖北省', visitors: 72999 },
-    { rank: 9, region: '山西省', visitors: 69956 },
-    { rank: 10, region: '河南省', visitors: 60419 },
-    { rank: 11, region: '福建省', visitors: 48991 },
-    { rank: 12, region: '内蒙古自区', visitors: 48583 },
-    { rank: 13, region: '广西壮族自', visitors: 48488 },
-    { rank: 14, region: '吉林省', visitors: 46727 },
-    { rank: 15, region: '新疆维吾尔自治区', visitors: 44240 }
+    { rank: 1, region: '石家庄市', visitors: 12586 },
+    { rank: 2, region: '唐山市', visitors: 10532 },
+    { rank: 3, region: '秦皇岛市', visitors: 9532 },
+    { rank: 4, region: '邯郸市', visitors: 8512 },
+    { rank: 5, region: '邢台市', visitors: 7523 },
+    { rank: 6, region: '保定市', visitors: 7203 },
+    { rank: 7, region: '张家口市', visitors: 6508 },
+    { rank: 8, region: '承德市', visitors: 6526 },
+    { rank: 9, region: '沧州市', visitors: 5982 },
+    { rank: 10, region: '廊坊市', visitors: 5820 },
+    { rank: 11, region: '衡水市', visitors: 5169 },
+    { rank: 12, region: '定州市', visitors: 4889 }
   ]
 
   // 过滤当前类型的场馆
@@ -116,16 +131,10 @@ const VenueOpen: React.FC = () => {
 
   return (
     <div>
-      <TotalTitle />
+      <TotalTitle linkPath="/resource/venue-open"/>
 
       <div
-        style={{
-          background: '#fff',
-          borderRadius: 8,
-          padding: 16,
-          marginBottom: 24,
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-        }}
+        className='venue-open-container'
       >
         <Tabs
           type="card"
@@ -135,31 +144,19 @@ const VenueOpen: React.FC = () => {
         />
         <Row gutter={[16, 16]}>
           {/* 场馆列表 */}
-          <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+          <Col xs={24} sm={24} md={18} lg={18} xl={17}>
             <Row gutter={[16, 16]}>
               {filteredVenues.map((venue) => (
                 <Col xs={24} sm={12} md={12} lg={8} xl={8} key={venue.id}>
                   <Card
                     hoverable
-                    style={{ height: '100%' }}
-                    styles={{
-                      body: { padding: 16 }
-                    }}
                   >
                     <div
-                      style={{
-                        marginBottom: 8,
-                        height: '150px'
-                      }}
+                      className='venue-card-img'
                     >
                       <img
-                        src="https://js365.org.cn/oss/js365/upload/2021/07/23/9673666b-9672-421a-a460-355094ececdb.jpg"
+                        src={venue.url}
                         alt=""
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover'
-                        }}
                       />
                     </div>
                     <Title level={5} style={{ marginBottom: 4 }}>
@@ -172,8 +169,8 @@ const VenueOpen: React.FC = () => {
             </Row>
           </Col>
 
-          {/* 排行榜 */}
-          <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+          {/* 场馆分布 */}
+          <Col xs={24} sm={24} md={6} lg={6} xl={7}>
             <Card
               title="核心区累计客流排行"
               styles={{
@@ -189,6 +186,8 @@ const VenueOpen: React.FC = () => {
                 scroll={{ x: true }}
               />
             </Card>
+            {/* <ExerciseMap
+            /> */}
           </Col>
         </Row>
       </div>

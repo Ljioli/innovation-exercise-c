@@ -28,7 +28,7 @@ const Layout: React.FC = () => {
           </div>
           <div className="search-login">
             <div className="search">
-              <Search placeholder="input search text" onSearch={onSearch} />
+              <Search placeholder="请输入搜索内容" onSearch={onSearch} />
             </div>
             <div className="login">
               <Space split={<Divider type="vertical" />}>

@@ -15,7 +15,6 @@ interface NoticeItem {
 const { Title } = Typography
 
 const Notice: React.FC = () => {
-  // 获取当前路径，用于导航激活状态
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -25,44 +24,44 @@ const Notice: React.FC = () => {
 
   // 模拟政策法规数据
   const policyData: NoticeItem[] = [
-    { id: 1, title: '安徽省全民健身条例实施细则', publishTime: '2025-09-03' },
-    { id: 2, title: '安徽省体育设施建设管理办法', publishTime: '2025-08-25' },
+    { id: 1, title: '河北省全民健身条例实施细则', publishTime: '2025-09-03' },
+    { id: 2, title: '河北省体育设施建设管理办法', publishTime: '2025-08-25' },
     {
       id: 3,
-      title: '安徽省体育产业发展专项资金管理办法',
+      title: '河北省体育产业发展专项资金管理办法',
       publishTime: '2025-08-18'
     },
-    { id: 4, title: '安徽省运动员选拔与培养条例', publishTime: '2025-08-10' },
-    { id: 5, title: '安徽省体育赛事活动管理规定', publishTime: '2025-07-28' },
-    { id: 6, title: '安徽省社会体育指导员管理办法', publishTime: '2025-07-15' },
+    { id: 4, title: '河北省运动员选拔与培养条例', publishTime: '2025-08-10' },
+    { id: 5, title: '河北省体育赛事活动管理规定', publishTime: '2025-07-28' },
+    { id: 6, title: '河北省社会体育指导员管理办法', publishTime: '2025-07-15' },
     {
       id: 7,
-      title: '安徽省公共体育设施向社会开放实施细则',
+      title: '河北省公共体育设施向社会开放实施细则',
       publishTime: '2025-07-05'
     },
     {
       id: 8,
-      title: '安徽省体育类民办非企业单位登记管理办法',
+      title: '河北省体育类民办非企业单位登记管理办法',
       publishTime: '2025-06-28'
     },
     {
       id: 9,
-      title: '安徽省体育彩票公益金使用管理办法',
+      title: '河北省体育彩票公益金使用管理办法',
       publishTime: '2025-06-18'
     },
-    { id: 10, title: '安徽省青少年体育训练大纲', publishTime: '2025-06-10' }
+    { id: 10, title: '河北省青少年体育训练大纲', publishTime: '2025-06-10' }
   ]
 
   // 模拟通知公告数据
   const noticeData: NoticeItem[] = [
     {
       id: 1,
-      title: '关于举办2025年安徽省青少年体育夏令营的通知',
+      title: '关于举办2025年河北省青少年体育夏令营的通知',
       publishTime: '2025-09-05'
     },
     {
       id: 2,
-      title: '安徽省体育局关于开展体育场地统计调查的通知',
+      title: '河北省体育局关于开展体育场地统计调查的通知',
       publishTime: '2025-09-01'
     },
     {
@@ -72,7 +71,7 @@ const Notice: React.FC = () => {
     },
     {
       id: 4,
-      title: '安徽省全民健身设施建设补助资金申报指南',
+      title: '河北省全民健身设施建设补助资金申报指南',
       publishTime: '2025-08-20'
     },
     {
@@ -82,17 +81,17 @@ const Notice: React.FC = () => {
     },
     {
       id: 6,
-      title: '安徽省体育局关于加强体育赛事活动安全管理的通知',
+      title: '河北省体育局关于加强体育赛事活动安全管理的通知',
       publishTime: '2025-08-10'
     },
     {
       id: 7,
-      title: '关于举办安徽省社会体育指导员技能大赛的通知',
+      title: '关于举办河北省社会体育指导员技能大赛的通知',
       publishTime: '2025-08-05'
     },
     {
       id: 8,
-      title: '安徽省体育产业发展专项资金申报通知',
+      title: '河北省体育产业发展专项资金申报通知',
       publishTime: '2025-07-30'
     },
     {
@@ -102,7 +101,7 @@ const Notice: React.FC = () => {
     },
     {
       id: 10,
-      title: '安徽省体育局关于开展体育系统安全生产检查的通知',
+      title: '河北省体育局关于开展体育系统安全生产检查的通知',
       publishTime: '2025-07-20'
     }
   ]
@@ -115,7 +114,6 @@ const Notice: React.FC = () => {
     }
   }, [location.pathname])
 
-  // 根据当前激活的导航项获取对应数据
   const getData = () => {
     return activeKey === '3' ? policyData : noticeData
   }
@@ -127,7 +125,7 @@ const Notice: React.FC = () => {
   const handleMenuClick = (e: { key: string }) => {
     const key = e.key as '3' | '4'
     setActiveKey(key)
-    setCurrentPage(1) // 切换分类时重置页码
+    setCurrentPage(1)
 
     const route = key === '3' ? 'policy' : 'inform'
     navigate(`/government/${route}`)
@@ -164,7 +162,6 @@ const Notice: React.FC = () => {
             <h1 className="brand-name">政务公开</h1>
           </div>
 
-          {/* 导航菜单 */}
           <Menu
             className="nav-menu"
             selectedKeys={[activeKey]}
@@ -198,7 +195,6 @@ const Notice: React.FC = () => {
             </Title>
           </div>
 
-          {/* 通知列表 */}
           <List
             className="notice-list"
             dataSource={getData()}
@@ -215,7 +211,6 @@ const Notice: React.FC = () => {
             )}
           />
 
-          {/* 分页 */}
           <div className="pagination-container">
             <Pagination
               current={currentPage}

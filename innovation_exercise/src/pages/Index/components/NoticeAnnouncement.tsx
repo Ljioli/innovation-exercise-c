@@ -23,8 +23,7 @@ const NoticeAnnouncement: React.FC = () => {
       publishTime: '2025-08-10',
       type: '政策法规',
       content:
-        '为进一步推动全民健身事业发展，满足市民日益增长的健身需求，我市将启动新一轮社区健身设施升级改造计划。'
-    },
+        '为深入贯彻落实党的二十届三中全会精神，完善全民健身公共服务体系，国家体育总局办公厅日前印发《关于进... ',},
     {
       id: 3,
       title: '社区健身设施升级改造计划',
@@ -43,7 +42,7 @@ const NoticeAnnouncement: React.FC = () => {
     <div>
       <TotalTitle
         titleText="政务公开"
-        linkPath="#"
+        linkPath="/government/policy"
         icon={<NotificationOutlined />}
       />
 

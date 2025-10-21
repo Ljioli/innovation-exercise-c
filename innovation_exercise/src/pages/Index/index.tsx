@@ -18,7 +18,6 @@ import './index.scss'
 import VenueOpen from './components/VenueOpen'
 import ExerciseGuide from './components/ExerciseGuide'
 import NoticeAnnouncement from './components/NoticeAnnouncement'
-// import ExerciseMap from './components/ExerciseMap'
 const { Title, Text } = Typography
 const onChange = (key: string) => {
   console.log(key)
@@ -184,10 +183,10 @@ const Index: React.FC = () => {
       <div id="exercise-guide">
         <ExerciseGuide />
       </div>
-      <Divider></Divider>
+      {/* <Divider></Divider> */}
       {/* 第五部分 */}
       {/* <div id="exercise-map">
-        <ExerciseMap />
+              111
       </div> */}
 
       <Divider></Divider>
@@ -209,7 +208,6 @@ const Index: React.FC = () => {
           href="#exercise-guide"
           tooltip="科学健身指导"
         />
-        <FloatButton />
         <FloatButton.BackTop visibilityHeight={0} />
       </FloatButton.Group>
     </div>

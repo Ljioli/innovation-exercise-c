@@ -36,7 +36,6 @@ const NoticeDetail: React.FC = () => {
     } else if (location.pathname.includes('/inform/')) {
       return 'inform'
     }
-    // 默认值
     return 'policy'
   }
 
@@ -47,29 +46,29 @@ const NoticeDetail: React.FC = () => {
 
   // 政策和通知标题数据
   const policyTitles = [
-    { id: 1, title: '安徽省全民健身条例实施细则' },
-    { id: 2, title: '安徽省体育设施建设管理办法' },
-    { id: 3, title: '安徽省体育产业发展专项资金管理办法' },
-    { id: 4, title: '安徽省运动员选拔与培养条例' },
-    { id: 5, title: '安徽省体育赛事活动管理规定' },
-    { id: 6, title: '安徽省社会体育指导员管理办法' },
-    { id: 7, title: '安徽省公共体育设施向社会开放实施细则' },
-    { id: 8, title: '安徽省体育类民办非企业单位登记管理办法' },
-    { id: 9, title: '安徽省体育彩票公益金使用管理办法' },
-    { id: 10, title: '安徽省青少年体育训练大纲' }
+    { id: 1, title: '河北省全民健身条例实施细则' },
+    { id: 2, title: '河北省体育设施建设管理办法' },
+    { id: 3, title: '河北省体育产业发展专项资金管理办法' },
+    { id: 4, title: '河北省运动员选拔与培养条例' },
+    { id: 5, title: '河北省体育赛事活动管理规定' },
+    { id: 6, title: '河北省社会体育指导员管理办法' },
+    { id: 7, title: '河北省公共体育设施向社会开放实施细则' },
+    { id: 8, title: '河北省体育类民办非企业单位登记管理办法' },
+    { id: 9, title: '河北省体育彩票公益金使用管理办法' },
+    { id: 10, title: '河北省青少年体育训练大纲' }
   ]
 
   const noticeTitles = [
-    { id: 1, title: '关于举办2025年安徽省青少年体育夏令营的通知' },
-    { id: 2, title: '安徽省体育局关于开展体育场地统计调查的通知' },
+    { id: 1, title: '关于举办2025年河北省青少年体育夏令营的通知' },
+    { id: 2, title: '河北省体育局关于开展体育场地统计调查的通知' },
     { id: 3, title: '关于组织参加全国体育行业职业技能大赛的通知' },
-    { id: 4, title: '安徽省全民健身设施建设补助资金申报指南' },
+    { id: 4, title: '河北省全民健身设施建设补助资金申报指南' },
     { id: 5, title: '关于开展2025年度体育类民办非企业单位年检工作的通知' },
-    { id: 6, title: '安徽省体育局关于加强体育赛事活动安全管理的通知' },
-    { id: 7, title: '关于举办安徽省社会体育指导员技能大赛的通知' },
-    { id: 8, title: '安徽省体育产业发展专项资金申报通知' },
+    { id: 6, title: '河北省体育局关于加强体育赛事活动安全管理的通知' },
+    { id: 7, title: '关于举办河北省社会体育指导员技能大赛的通知' },
+    { id: 8, title: '河北省体育产业发展专项资金申报通知' },
     { id: 9, title: '关于做好2025年下半年体育彩票销售工作的通知' },
-    { id: 10, title: '安徽省体育局关于开展体育系统安全生产检查的通知' }
+    { id: 10, title: '河北省体育局关于开展体育系统安全生产检查的通知' }
   ]
 
   // 模拟详情内容生成
@@ -172,7 +171,6 @@ const NoticeDetail: React.FC = () => {
 
   return (
     <div>
-      {/* 顶部导航栏 */}
       <header className="header">
         <div className="container">
           <div className="breadcrumb-container">
@@ -190,9 +188,7 @@ const NoticeDetail: React.FC = () => {
         </div>
       </header>
 
-      {/* 主要内容区 */}
       <div className="content-wrapper">
-        {/* 左侧导航 */}
         <aside className="sidebar">
           <div className="brand">
             <div className="brand-icon"></div>
@@ -217,9 +213,7 @@ const NoticeDetail: React.FC = () => {
           </Menu>
         </aside>
 
-        {/* 右侧内容区 - 详情内容 */}
         <div className="content-area">
-          {/* 标题区域 */}
           <div className="title-section">
             <Title level={2} className="detail-title">
               {noticeDetail.title}
@@ -235,7 +229,6 @@ const NoticeDetail: React.FC = () => {
             </div>
           </div>
 
-          {/* 文章内容 */}
           <div className="detail-content">
             {noticeDetail.content
               .split('\n')

@@ -69,7 +69,7 @@ const mockVenueDetails: Record<number, VenueDetail> = {
     openingHours: '06:00-22:00',
     phone: '0311-85918888',
     type: '综合体育馆',
-    image: 'https://picsum.photos/800/500?random=1',
+    image: 'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
     province: '河北省',
     city: '石家庄市',
     operator: '河北省体育局',

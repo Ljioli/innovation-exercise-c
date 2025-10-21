@@ -15,7 +15,7 @@ import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 const { Title, Text, Paragraph } = Typography
 const { Item: BreadcrumbItem } = Breadcrumb
 
-// 新闻数据类型定义
+// 定义新闻数据类型 
 interface NewsItem {
   id: number
   title: string
@@ -26,7 +26,6 @@ interface NewsItem {
 }
 
 const News: React.FC = () => {
-  // 获取当前路由信息
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -38,7 +37,6 @@ const News: React.FC = () => {
     return '1' // 时政新闻
   }
 
-  // 状态管理
   const [activeType, setActiveType] = useState<'1' | '2'>(getDefaultType())
 
   // 当分类变化时更新路由
@@ -56,7 +54,7 @@ const News: React.FC = () => {
       content:
         '国家领导人在会议上发表重要讲话，强调加强国际合作，共同应对全球挑战，推动构建人类命运共同体。',
       publishTime: '2025-09-05',
-      cover: 'https://picsum.photos/id/1015/600/400',
+      cover: 'https://www.gov.cn/yaowen/liebiao/202411/W020241117249768158161_ORIGIN.jpg',
       type: '1'
     },
     {
@@ -65,7 +63,7 @@ const News: React.FC = () => {
       content:
         '本次常委会会议审议了环境保护法修订草案、数字经济促进法草案等多项重要法律案，回应社会关切。',
       publishTime: '2025-09-03',
-      cover: 'https://picsum.photos/id/1025/600/400',
+      cover: 'https://tse2-mm.cn.bing.net/th/id/OIP-C.Qn0Gz06jpI5aJNN8EOOzYAHaEK?w=269&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '1'
     },
     {
@@ -89,47 +87,47 @@ const News: React.FC = () => {
 
     // 热门赛事
     {
-      id: 5,
-      title: '世界杯预选赛亚洲区：中国队战胜韩国队',
+      id: 6,
+      title: '第十五届全运会群众比赛象棋项目决赛鸣金收兵',
       content:
-        '在世界杯预选赛亚洲区关键战中，中国队凭借出色发挥，以2-1战胜韩国队，取得小组出线主动权。',
-      publishTime: '2025-09-04',
-      cover: 'https://picsum.photos/id/1058/600/400',
+        '9月5日至12日，中华人民共和国第十五届运动会群众比赛象棋项目决赛在广东省深圳市罗湖区举行',
+      publishTime: '2025-09-14',
+      cover: 'https://tse2-mm.cn.bing.net/th/id/OIP-C.5t55d8ZGeszG4d8OEnG2jAHaFC?w=239&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '2'
     },
     {
-      id: 6,
-      title: '全运会田径比赛多项纪录被打破',
+      id: 5,
+      title: '2025年河北省第二届体育行业职业技能竞赛社会体育指导（健身）开赛',
       content:
-        '在全运会田径赛场上，共有5项全国纪录被刷新，展现了我国田径运动的蓬勃发展态势。',
-      publishTime: '2025-09-02',
-      cover: 'https://picsum.photos/id/1059/600/400',
+        '9月20日，2025年河北省第二届体育行业职业技能竞赛社会体育指导（健身）在石家庄市万拓体育恒大华府运动中心正式开赛。',
+      publishTime: '2025-09-22',
+      cover: 'https://tse1-mm.cn.bing.net/th/id/OIP-C.ojdGvfytBn8JRAjRV1YPYgHaE8?w=261&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '2'
     },
     {
       id: 7,
-      title: '国际乒联世锦赛：中国乒乓球队斩获五金',
+      title: '雄东片区全民健身志愿服务启动 居民解锁科学健身“新姿势”',
       content:
-        '在刚刚结束的国际乒联世界锦标赛上，中国乒乓球队表现出色，包揽全部五个项目的冠军。',
-      publishTime: '2025-08-30',
+        '近日，雄安新区雄东片区B单元观香园气氛热烈，由新区宣传网信局主办，容东管理委员会、容西管理委员会',
+      publishTime: '2025-09-01',
       cover: 'https://picsum.photos/id/1060/600/400',
       type: '2'
     },
     {
       id: 8,
-      title: '奥运会倒计时一周年活动举行',
+      title: '河北省第三届村BA总决赛在承德丰宁圆满收官',
       content:
-        '距离下届奥运会开幕还有一周年，组委会举行了隆重的倒计时活动，发布了多项赛事筹备进展。',
+        '8月29日，2025年“冀农乐”第三届和美乡村“和顺杯”篮球赛（村BA）总决赛在丰宁满族自治县北园子村圆满收官。',
       publishTime: '2025-08-28',
-      cover: 'https://picsum.photos/id/1062/600/400',
+      cover: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.k2PjdIFLemJSoRZfaUumLAHaE7?w=266&h=180&c=7&r=0&o=5&dpr=2&pid=1.7',
       type: '2'
     }
   ]
 
-  // 根据当前分类筛选新闻
+  // 筛选新闻
   const filteredNews = newsData
     .filter((item) => item.type === activeType)
-    // 按日期倒序排列
+    // 按日期倒序
     .sort((a, b) => {
       return (
         new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
@@ -144,7 +142,6 @@ const News: React.FC = () => {
 
   return (
     <Row gutter={[0, 24]}>
-      {/* 左侧导航 */}
       <Col xs={24} md={6} lg={5} xl={4}>
         <Card className="news-sidebar">
           <div className="sidebar-title">
@@ -177,7 +174,6 @@ const News: React.FC = () => {
         </Card>
       </Col>
 
-      {/* 右侧内容区 */}
       <Col xs={24} md={18} lg={19} xl={20}>
         <Card className="news-content">
           <BreadcrumbComponent
@@ -190,7 +186,6 @@ const News: React.FC = () => {
             ]}
           />
 
-          {/* 页面标题 */}
           <div className="page-title">
             <Title level={3}>
               {activeType === '1' ? '时政新闻' : '热门赛事'}
@@ -198,7 +193,6 @@ const News: React.FC = () => {
             <Divider />
           </div>
 
-          {/* 新闻列表 */}
           <div className="news-list">
             {filteredNews.map((news) => (
               <Link

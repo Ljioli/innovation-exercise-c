@@ -203,6 +203,22 @@
     .ant-tabs-content {
       margin-top: 0;
     }
+    .messages-card,
+    .posts-card,
+    .favorites-card {
+      border-radius: 8px;
+      .ant-list-item {
+        padding: 12px 16px;
+      }
+    }
+
+    .posts-card .ant-list-item-meta-description p {
+      margin-bottom: 6px;
+    }
+
+    .favorites-card .ant-list-item-meta-title {
+      font-weight: 500;
+    }
   }
 
   .details-card,
@@ -328,6 +344,10 @@
         }
       }
     }
+  }
+
+  .ant-list-item {
+    padding: 16px 16px;
   }
 }
 
