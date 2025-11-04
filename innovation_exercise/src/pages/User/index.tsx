@@ -1,3 +1,4 @@
+// index.tsx
 import React, { useState, useEffect } from 'react'
 import {
   UserOutlined,
@@ -12,7 +13,9 @@ import {
   FireOutlined,
   DashboardOutlined,
   ManOutlined,
-  WomanOutlined
+  WomanOutlined,
+  LockOutlined,
+  SafetyCertificateOutlined
 } from '@ant-design/icons'
 import {
   Card,
@@ -30,9 +33,13 @@ import {
   Row,
   Col,
   Progress,
-  Tag
+  Tag,
+  List,
+  Modal,
+  Divider
 } from 'antd'
 import './index.scss'
+
 const { Title } = Typography
 
 // 定义用户信息类型接口
@@ -55,7 +62,7 @@ interface UserInfo {
   fitnessHobby?: string
 }
 
-// 健身数据接口
+// 定义健身数据接口
 interface FitnessData {
   weeklyExercise: number // 本周运动次数
   monthlyGoal: number // 月度目标
@@ -88,6 +95,11 @@ const User: React.FC = () => {
   // 编辑状态管理
   const [editing, setEditing] = useState(false)
   const [form] = Form.useForm()
+  const [passwordForm] = Form.useForm()
+
+  // 修改密码模态框状态
+  const [changePasswordVisible, setChangePasswordVisible] = useState(false)
+  const [changingPassword, setChangingPassword] = useState(false)
 
   // 模拟获取用户信息
   useEffect(() => {
@@ -137,6 +149,26 @@ const User: React.FC = () => {
   const handleCancel = () => {
     form.setFieldsValue(userInfo)
     setEditing(false)
+  }
+
+  // 处理修改密码
+  const handleChangePassword = async (values: any) => {
+    setChangingPassword(true)
+    try {
+      // 模拟API调用
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // 这里应该是实际的修改密码API调用
+      console.log('修改密码:', values)
+      
+      message.success('密码修改成功')
+      setChangePasswordVisible(false)
+      passwordForm.resetFields()
+    } catch (error) {
+      message.error('密码修改失败，请重试')
+    } finally {
+      setChangingPassword(false)
+    }
   }
 
   // 计算月度目标完成率
@@ -292,14 +324,23 @@ const User: React.FC = () => {
               <div className="title-with-action">
                 <h3 className="section-title">身体信息</h3>
                 {!editing ? (
-                  <Button
-                    type="primary"
-                    icon={<EditOutlined />}
-                    onClick={handleEdit}
-                    className="edit-btn"
-                  >
-                    编辑信息
-                  </Button>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <Button
+                      type="primary"
+                      icon={<EditOutlined />}
+                      onClick={handleEdit}
+                      className="edit-btn"
+                    >
+                      编辑信息
+                    </Button>
+                    <Button
+                      type="default"
+                      icon={<LockOutlined />}
+                      onClick={() => setChangePasswordVisible(true)}
+                    >
+                      修改密码
+                    </Button>
+                  </div>
                 ) : (
                   <div className="edit-actions">
                     <Button
@@ -380,7 +421,9 @@ const User: React.FC = () => {
 
               {editing && (
                 <div className="additional-edit-fields">
-                  <Title level={3} className="section-title">编辑基本信息</Title>
+                  <Title level={3} className="section-title">
+                    编辑基本信息
+                  </Title>
                   <Form form={form} layout="vertical" className="edit-form">
                     <Row gutter={24}>
                       <Col span={12}>
@@ -449,6 +492,98 @@ const User: React.FC = () => {
           </TabPane>
         </Tabs>
       </div>
+
+      <Modal
+        title={
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <SafetyCertificateOutlined style={{ color: '#1890ff' }} />
+            <span>修改密码</span>
+          </div>
+        }
+        open={changePasswordVisible}
+        onCancel={() => {
+          setChangePasswordVisible(false)
+          passwordForm.resetFields()
+        }}
+        footer={null}
+        width={400}
+        centered
+      >
+        <Form
+          form={passwordForm}
+          layout="vertical"
+          onFinish={handleChangePassword}
+          style={{ marginTop: '20px' }}
+        >
+          <Form.Item
+            name="oldPassword"
+            label="原密码"
+            rules={[{ required: true, message: '请输入原密码' }]}
+          >
+            <Input.Password 
+              placeholder="请输入当前密码" 
+              prefix={<LockOutlined />}
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="newPassword"
+            label="新密码"
+            rules={[
+              { required: true, message: '请输入新密码' },
+              { min: 6, message: '密码长度至少6位' }
+            ]}
+          >
+            <Input.Password 
+              placeholder="请输入新密码" 
+              prefix={<LockOutlined />}
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            label="确认新密码"
+            dependencies={['newPassword']}
+            rules={[
+              { required: true, message: '请确认新密码' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('newPassword') === value) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject(new Error('两次输入的密码不一致'))
+                },
+              }),
+            ]}
+          >
+            <Input.Password 
+              placeholder="请再次输入新密码" 
+              prefix={<LockOutlined />}
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item style={{ marginBottom: 0, marginTop: '30px' }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={changingPassword}
+              block
+              size="large"
+              style={{
+                background: 'linear-gradient(45deg, #1890ff, #36cfc9)',
+                border: 'none',
+                height: '40px',
+                fontWeight: '500'
+              }}
+            >
+              确认修改
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   )
 }
