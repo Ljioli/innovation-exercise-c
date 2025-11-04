@@ -9,8 +9,14 @@ const Index = lazy(() => import('@/pages/Index'))
 const Notice = lazy(() => import('@/pages/Notice'))
 const NoticeDetail = lazy(() => import('@/pages/Notice/noticeDetail'))
 const VenueOpen = lazy(() => import('@/pages/Resource/venueOpen'))
+const VenueVisualization = lazy(() => import('@/pages/Resource/venueVisualization'))
 const VenueDetail = lazy(() => import('@/pages/Resource/venueDetail'))
-const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity'))
+// const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity'))
+const IntelligentQA = lazy(() => import('@/pages/Qa/intelligentQA'))
+const KnowledgeGraph = lazy(() => import('@/pages/KnowledgeGraph/knowledgeGraph'))
+const ExerciseGuide = lazy(() => import('@/pages/Index/components/components/GuideDetail'))
+
+
 
 const User = lazy(() => import('@/pages/User'))
 
@@ -24,6 +30,14 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={'加载中'}>
             <Index />
+          </Suspense>
+        )
+      },
+      {
+        path: 'exercise-guide',
+        element: (
+          <Suspense fallback={'加载中'}>
+            <ExerciseGuide />
           </Suspense>
         )
       },
@@ -119,14 +133,38 @@ const routes: RouteObject[] = [
                 <VenueDetail />
               </Suspense>
             )
+          },
+          {
+            path: 'score-visualization',
+            element: (
+              <Suspense fallback={'加载中'}>
+                <VenueVisualization />
+              </Suspense>
+            )
           }
         ]
       },
+      // {
+      //   path: 'community',
+      //   element: (
+      //     <Suspense fallback={'加载中'}>
+      //       <FitnessCommunity />
+      //     </Suspense>
+      //   )
+      // },
       {
-        path: 'community',
+        path: 'qa',
         element: (
           <Suspense fallback={'加载中'}>
-            <FitnessCommunity />
+            <IntelligentQA />
+          </Suspense>
+        )
+      },
+      {
+        path: 'knowledge-graph',
+        element: (
+          <Suspense fallback={'加载中'}>
+            <KnowledgeGraph />
           </Suspense>
         )
       },

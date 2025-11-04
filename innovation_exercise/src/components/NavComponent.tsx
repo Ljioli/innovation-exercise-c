@@ -47,22 +47,48 @@ const allItems: MenuItem[] = [
     key: '4',
     children: [
       {
-        label: <Link to="#">15分钟健身圈</Link>,
+        label: (
+          <Link
+            to="http://127.0.0.1:5500/src/pages/Resource/VenueMap.html"
+            target="_blank"
+          >
+            15分钟健身圈
+          </Link>
+        ),
         key: '4-1'
       },
       {
         label: <Link to="/resource/venue-open">场馆开放</Link>,
         key: '4-2'
+      },
+      {
+        label: (
+          <Link
+            to="/resource/score-visualization"
+            target="_blank"
+          >
+            均衡性与可及性评分可视化平台
+          </Link>
+        ),
+        key: '4-3'
       }
     ]
   },
+  // {
+  //   label: <Link to="/community"> 健身社区</Link>,
+  //   key: '5'
+  // },
   {
-    label: <Link to="/community"> 健身社区</Link>,
+    label: <Link to="/qa"> 智能问答</Link>,
     key: '5'
+  },
+    {
+    label: <Link to="/knowledge-graph"> 知识图谱</Link>,
+    key: '6'
   },
   {
     label: <Link to="/user"> 个人中心</Link>,
-    key: '6'
+    key: '7'
   }
 ]
 
@@ -84,10 +110,14 @@ const NavComponent: React.FC<NavComponentProps> = ({ showAll = false }) => {
         return '3-2'
       case '/resource/venue-open':
         return '4-2'
-      case '/community':
+      case '/resource/score-visualization':
+        return '4-3'
+      case '/qa':
         return '5'
-      case '/user':
+      case '/knowledge-graph':
         return '6'
+      case '/user':
+        return '7'
       default:
         return 'mail'
     }

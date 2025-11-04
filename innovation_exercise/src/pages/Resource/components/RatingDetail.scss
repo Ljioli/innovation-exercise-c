@@ -1,0 +1,204 @@
+$primary-color: #1890ff;
+$accent-color: #13c2c2;
+$dark-bg: #0a325d;
+$glass-bg: rgba(255, 255, 255, 0.08);
+$glass-border: rgba(255, 255, 255, 0.2);
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.8);
+
+.rating-detail-modal {
+  .ant-modal-content {
+    background: $dark-bg;
+    border: 1px solid $glass-border;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+    .ant-modal-header {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid $glass-border !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 20px 24px;
+    
+    .ant-modal-title{
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+// 总体评分
+.overall-rating-section {
+  text-align: center;
+  margin: 20px 0 30px;
+  padding: 25px 20px;
+  background: $glass-bg;
+  border-radius: 12px;
+  border: 1px solid $glass-border;
+
+  .ant-typography {
+    color: $text-primary !important;
+    margin-bottom: 15px !important;
+  }
+
+  .overall-score {
+    margin: 15px 0;
+
+    .score-value {
+      font-size: 56px;
+      font-weight: bold;
+      color: $primary-color;
+      text-shadow: 0 0 20px rgba(24, 144, 255, 0.5);
+    }
+
+    .score-unit {
+      font-size: 18px;
+      color: $text-secondary;
+      margin-left: 8px;
+    }
+  }
+
+  .overall-progress {
+    width: 80%;
+    margin: 0 auto;
+
+    .ant-progress-bg {
+      background: $primary-color !important;
+    }
+  }
+}
+
+.rating-components .ant-typography{
+  color: white !important;
+}
+
+// 图表区域
+.charts-container {
+  display: flex;
+  margin: 25px 0;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.chart-wrapper {
+  flex: 1;
+  background: $glass-bg;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid $glass-border;
+
+  .ant-typography {
+    color: $text-primary !important;
+    font-size: 20px;
+    text-align: center;
+  }
+}
+
+.bar-chart, .pie-chart {
+  height: 280px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 10px;
+}
+
+// 计算公式
+.calculation-formula {
+  background: $glass-bg;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 25px 0;
+  border: 1px solid $glass-border;
+
+  p {
+    color: $text-secondary;
+    margin: 6px 0;
+  }
+
+  .calculation-process {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border-left: 3px solid $accent-color;
+    font-family: monospace;
+  }
+}
+
+// 指标说明
+.indicator-explanations {
+  margin: 30px 0 20px;
+
+  .ant-typography {
+    color: $text-primary !important;
+    margin-bottom: 15px !important;
+  }
+}
+
+.indicators-list {
+  margin-top: 15px;
+}
+
+.indicator-item {
+  margin-bottom: 12px;
+  padding: 16px;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $accent-color;
+    transform: translateY(-1px);
+  }
+}
+
+.indicator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  .indicator-name {
+    font-weight: 600;
+    color: $text-primary;
+    flex: 1;
+  }
+
+  .indicator-weight {
+    font-size: 12px;
+    color: $text-primary;
+    background: $primary-color;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+}
+
+.indicator-desc {
+  color: $text-secondary;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+// 滚动条
+.ant-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ant-modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ant-modal-body::-webkit-scrollbar-thumb {
+  background: $primary-color;
+  border-radius: 3px;
+}

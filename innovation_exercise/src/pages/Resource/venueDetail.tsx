@@ -1,63 +1,75 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Card, Row, Col, Typography, Tabs, Table, Descriptions,Button } from 'antd'
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Card, Row, Col, Typography, Table, Descriptions } from 'antd';
 import {
   ClockCircleOutlined,
   EnvironmentOutlined,
   PhoneOutlined,
-  TeamOutlined
-} from '@ant-design/icons'
-import './venueDetail.scss'
-import VenueMap from './components/VenueMap'
-import VenueBooking from './components/VenueBooking'
+  TeamOutlined,
+  StarOutlined
+} from '@ant-design/icons';
+import './venueDetail.scss';
+import VenueMap from './components/VenueMap';
+import RatingDetail from './components/RatingDetail';
 
-const { Title } = Typography
-const { TabPane } = Tabs
+const { Title } = Typography;
 
 // 引入基础的Venue接口定义
 interface Venue {
-  id: number
-  name: string
-  address: string
-  openingHours: string
-  phone: string
-  type: string
-  image: string
-  province: string
-  city: string
-  operator?: string
-  year?: string
-  area?: string
+  id: number;
+  name: string;
+  address: string;
+  openingHours: string;
+  phone: string;
+  type: string;
+  image: string;
+  province: string;
+  city: string;
+  operator?: string;
+  year?: string;
+  area?: string;
 }
 
 // 扩展场馆数据类型
 interface VenueDetail extends Venue {
-  outerFreeArea?: string
-  venueArea?: string
-  outerArea?: string
-  outerFreeCount?: string
-  coreFreeArea?: string
-  hasOutdoorArea?: string
-  coreArea?: string
-  coreFreeCount?: string
-  landArea?: string
-  seatNum?: string
-  superior?: string
-  // 详细描述
-  description?: string
-  // 设施列表
-  facilities?: Facility[]
+  outerFreeArea?: string;
+  venueArea?: string;
+  outerArea?: string;
+  outerFreeCount?: string;
+  coreFreeArea?: string;
+  hasOutdoorArea?: string;
+  coreArea?: string;
+  coreFreeCount?: string;
+  landArea?: string;
+  seatNum?: string;
+  superior?: string;
+  description?: string;
+  facilities?: Facility[];
 }
 
 // 设施数据类型
 interface Facility {
-  id: number
-  name: string
-  image: string
-  quantity: number
-  availableCount: number
-  type: string
-  lastCheck?: string
+  id: number;
+  name: string;
+  image: string;
+  quantity: number;
+  availableCount: number;
+  type: string;
+  lastCheck?: string;
+}
+
+// 评分指标类型
+export interface RatingIndicator {
+  name: string;
+  score: number;
+  weight: number;
+  description: string;
+}
+
+// 评分数据类型
+export interface RatingData {
+  overall: number;
+  indicators: RatingIndicator[];
 }
 
 // 模拟场馆详情数据
@@ -130,16 +142,16 @@ const mockVenueDetails: Record<number, VenueDetail> = {
   2: {
     id: 2,
     name: '河北奥体中心主体育场',
-    address: '石家庄市长安区中山东路211号', // 修正地址
-    openingHours: '全天开放', // 修正开放时间
-    phone: '0311-86688888', // 修正电话
-    type: '户外健身区', // 修正类型
+    address: '石家庄市长安区中山东路211号',
+    openingHours: '全天开放',
+    phone: '0311-86688888',
+    type: '户外健身区',
     image: 'https://picsum.photos/800/500?random=2',
     province: '河北省',
     city: '石家庄市',
-    operator: '石家庄市市政管理处', // 修正运营单位
-    year: '2010', // 修正建成年份
-    area: '8000', // 修正建筑面积
+    operator: '石家庄市市政管理处',
+    year: '2010',
+    area: '8000',
     outerFreeArea: '3000',
     venueArea: '8000',
     outerArea: '5000',
@@ -182,108 +194,60 @@ const mockVenueDetails: Record<number, VenueDetail> = {
         lastCheck: '2023-10-05'
       }
     ]
-  },
-  3: {
-    id: 3,
-    name: '石家庄市新华区文体中心体育综合馆',
-    address: '河北省石家庄市新华区北苑街道钟旺路15号',
-    openingHours: '08:00-21:00',
-    phone: '010-84375088',
-    type: '综合体育馆',
-    image: 'https://picsum.photos/800/500?random=3',
-    province: '北京市',
-    city: '北京市',
-    operator: '国家体育总局',
-    year: '2008',
-    area: '143000',
-    outerFreeArea: '20000',
-    venueArea: '143000',
-    outerArea: '30000',
-    outerFreeCount: '15',
-    coreFreeArea: '80000',
-    hasOutdoorArea: '是',
-    coreArea: '113000',
-    coreFreeCount: '20',
-    landArea: '300000',
-    seatNum: '30000',
-    superior: '国家体育总局',
-    description:
-      '北京奥林匹克体育中心建于2008年，是北京奥运会重要场馆之一，赛后向公众开放，提供各类体育健身服务。',
-    facilities: [
-      {
-        id: 301,
-        name: '田径场',
-        image: 'https://picsum.photos/100/100?random=301',
-        quantity: 1,
-        availableCount: 1,
-        type: '田径器材',
-        lastCheck: '2023-10-10'
-      },
-      {
-        id: 302,
-        name: '游泳馆',
-        image: 'https://picsum.photos/100/100?random=302',
-        quantity: 1,
-        availableCount: 1,
-        type: '水上设施',
-        lastCheck: '2023-10-05'
-      }
-    ]
-  },
-  4: {
-    id: 4,
-    name: '石家庄市鹿泉区篮球馆',
-    address: '河北省石家庄市鹿泉区获鹿镇乡乡镇向阳大街街213号',
-    openingHours: '07:30-22:00',
-    phone: '021-64385200',
-    type: '综合体育馆',
-    image: 'https://picsum.photos/800/500?random=4',
-    province: '上海市',
-    city: '上海市',
-    operator: '上海市体育局',
-    year: '1975',
-    area: '106000',
-    outerFreeArea: '15000',
-    venueArea: '106000',
-    outerArea: '25000',
-    outerFreeCount: '10',
-    coreFreeArea: '60000',
-    hasOutdoorArea: '是',
-    coreArea: '81000',
-    coreFreeCount: '15',
-    landArea: '200000',
-    seatNum: '18000',
-    superior: '上海市体育局',
-    description:
-      '上海体育馆建于1975年，是上海重要的综合性体育场馆，可举办各类体育赛事和文艺演出，常年向市民开放。',
-    facilities: [
-      {
-        id: 401,
-        name: '羽毛球馆',
-        image: 'https://picsum.photos/100/100?random=401',
-        quantity: 12,
-        availableCount: 10,
-        type: '球类',
-        lastCheck: '2023-10-12'
-      },
-      {
-        id: 402,
-        name: '健身房',
-        image: 'https://picsum.photos/100/100?random=402',
-        quantity: 1,
-        availableCount: 1,
-        type: '健身中心',
-        lastCheck: '2023-10-08'
-      }
-    ]
   }
-}
+};
 
 const VenueDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>()
-  const venueId = id ? parseInt(id, 10) : 1
-  const venue = mockVenueDetails[venueId] || mockVenueDetails[1] // 默认显示第一个场馆
-  const [bookingVisible, setBookingVisible] = useState(false)
+  const { id } = useParams<{ id: string }>();
+  const venueId = id ? parseInt(id, 10) : 1;
+  const venue = mockVenueDetails[venueId] || mockVenueDetails[1];
+  const [ratingVisible, setRatingVisible] = useState(false);
+
+  // 场馆评分数据
+  const ratingData: RatingData = {
+    overall: 4.7,
+    indicators: [
+      { 
+        name: '设施完善度', 
+        score: 4.8, 
+        weight: 30,
+        description: '评估场馆设施的完整性、先进性和维护状况'
+      },
+      { 
+        name: '服务质量', 
+        score: 4.5, 
+        weight: 25,
+        description: '评估场馆工作人员服务态度和专业水平'
+      },
+      { 
+        name: '场地条件', 
+        score: 4.9, 
+        weight: 20,
+        description: '评估场地大小、采光、通风等物理条件'
+      },
+      { 
+        name: '开放时间合理性', 
+        score: 4.6, 
+        weight: 15,
+        description: '评估开放时间是否满足市民健身需求'
+      },
+      { 
+        name: '交通便利性', 
+        score: 4.4, 
+        weight: 10,
+        description: '评估场馆的交通可达性和停车条件'
+      }
+    ]
+  };
+
+  // 计算总分（用于演示计算过程）
+  const calculateOverallScore = () => {
+    const total = ratingData.indicators.reduce(
+      (sum, item) => sum + (item.score * item.weight / 100), 
+      0
+    );
+    return total.toFixed(1);
+  };
 
   // 设施表格列定义
   const facilityColumns = [
@@ -320,7 +284,7 @@ const VenueDetail: React.FC = () => {
       dataIndex: 'lastCheck',
       key: 'lastCheck'
     }
-  ]
+  ];
 
   // 基本信息描述列表项
   const basicInfoItems = [
@@ -414,7 +378,7 @@ const VenueDetail: React.FC = () => {
       children: venue.superior || '未知',
       span: 1
     }
-  ]
+  ];
 
   return (
     <div className="venue-detail-page">
@@ -434,9 +398,23 @@ const VenueDetail: React.FC = () => {
 
           {/* 右侧基本信息 */}
           <Col xs={24} md={14}>
-            <Title level={2} className="venue-name">
-              {venue.name}
-            </Title>
+            <div className="venue-header">
+              <Title level={2} className="venue-name">
+                {venue.name}
+              </Title>
+              
+              {/* 评分显示区域 */}
+              <div 
+                className="rating-display" 
+                onClick={() => setRatingVisible(true)}
+              >
+                <div className="rating-value">
+                  {ratingData.overall}
+                  <StarOutlined className="star-icon" />
+                </div>
+                <div className="rating-text">点击查看详情</div>
+              </div>
+            </div>
 
             <div className="basic-info-list">
               <div className="info-item">
@@ -459,25 +437,22 @@ const VenueDetail: React.FC = () => {
 
               <div className="info-item">
                 <TeamOutlined className="info-icon" />
-
                 <span className="info-label">运营单位：</span>
                 <span className="info-value">{venue.operator || '未知'}</span>
               </div>
-              <Button
-                type="primary"
-                onClick={() => setBookingVisible(true)}
-              >
-                预约场馆
-              </Button>
-              <VenueBooking
-                visible={bookingVisible}
-                onClose={() => setBookingVisible(false)}
-                venue={{ id: venue.id, name: venue.name, type: venue.type }}
-              />
             </div>
           </Col>
         </Row>
       </Card>
+
+      {/* 评分详情弹窗组件 */}
+      <RatingDetail
+        visible={ratingVisible}
+        venueName={venue.name}
+        ratingData={ratingData}
+        onClose={() => setRatingVisible(false)}
+        calculateOverallScore={calculateOverallScore}
+      />
 
       {/* 第二部分：详细信息 */}
       <Card className="detail-info-card" title="详细介绍">
@@ -488,7 +463,7 @@ const VenueDetail: React.FC = () => {
           className="venue-descriptions"
         />
 
-        {/* 场馆设施标签页 */}
+        {/* 场馆设施 */}
         <Title level={3}>场馆设施</Title>
         <Table
           columns={facilityColumns}
@@ -503,7 +478,7 @@ const VenueDetail: React.FC = () => {
         <VenueMap venueName={venue.name} />
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default VenueDetail
+export default VenueDetail;
