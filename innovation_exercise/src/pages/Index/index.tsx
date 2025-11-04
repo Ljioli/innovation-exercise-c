@@ -173,7 +173,6 @@ const Index: React.FC = () => {
 
       <Divider></Divider>
       {/* 第三部分 */}
-      {/* <EventItem /> */}
       <div id="venue-open">
         <VenueOpen />
       </div>
