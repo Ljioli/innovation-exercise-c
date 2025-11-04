@@ -128,7 +128,7 @@ const NavComponent: React.FC<NavComponentProps> = ({ showAll = false }) => {
       setMenuItems(allItems)
     } else {
       const filteredItems = allItems.filter(
-        (item) => item && item.key !== '5' && item.key !== '6'
+        (item) => item && item.key !== '7'
       )
       setMenuItems(filteredItems)
     }
