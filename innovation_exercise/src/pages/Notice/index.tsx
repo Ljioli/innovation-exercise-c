@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Breadcrumb, Menu, List, Typography, Pagination } from 'antd'
-import { HomeOutlined, FileTextOutlined, BellOutlined } from '@ant-design/icons'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Breadcrumb, Menu, List, Typography, Pagination, Input } from 'antd'
+import { HomeOutlined, FileTextOutlined, BellOutlined, SearchOutlined } from '@ant-design/icons'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 import './index.scss'
@@ -13,6 +13,7 @@ interface NoticeItem {
 }
 
 const { Title } = Typography
+const { Search } = Input
 
 const Notice: React.FC = () => {
   const location = useLocation()
@@ -21,6 +22,8 @@ const Notice: React.FC = () => {
   // 状态管理
   const [activeKey, setActiveKey] = useState<'3' | '4'>('3')
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchText, setSearchText] = useState('')
+  const PAGE_SIZE = 8  // 每页显示5条
 
   // 模拟政策法规数据
   const policyData: NoticeItem[] = [
@@ -107,26 +110,44 @@ const Notice: React.FC = () => {
   ]
 
   useEffect(() => {
+    // 页面加载时根据路由设置激活项并重置搜索
     if (location.pathname.includes('policy')) {
       setActiveKey('3')
     } else if (location.pathname.includes('inform')) {
       setActiveKey('4')
     }
+    setSearchText('')
+    setCurrentPage(1)
   }, [location.pathname])
 
-  const getData = () => {
+  // 获取当前类型的所有数据
+  const getAllData = () => {
     return activeKey === '3' ? policyData : noticeData
   }
 
+  // 根据搜索文本过滤数据
+  const filteredData = useMemo(() => {
+    const data = getAllData()
+    if (!searchText.trim()) return data
+    
+    return data.filter(item => 
+      item.title.toLowerCase().includes(searchText.toLowerCase().trim())
+    )
+  }, [getAllData(), searchText])
 
-
+  // 处理分页数据
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE
+    return filteredData.slice(startIndex, startIndex + PAGE_SIZE)
+  }, [filteredData, currentPage])
 
   // 导航项点击处理
   const handleMenuClick = (e: { key: string }) => {
     const key = e.key as '3' | '4'
     setActiveKey(key)
     setCurrentPage(1)
-
+    setSearchText('')
+    
     const route = key === '3' ? 'policy' : 'inform'
     navigate(`/government/${route}`)
   }
@@ -137,6 +158,12 @@ const Notice: React.FC = () => {
     window.scrollTo(0, 0)
   }
 
+  // 搜索处理
+  const handleSearch = (value: string) => {
+    setSearchText(value)
+    setCurrentPage(1) // 搜索时重置到第一页
+  }
+
   return (
     <div className="government-container">
       <header className="header">
@@ -144,7 +171,7 @@ const Notice: React.FC = () => {
           <div className="breadcrumb-container">
             <BreadcrumbComponent
               items={[
-                { label: '政务公开',clickable: false   },
+                { label: '政务公开', clickable: false },
                 {
                   label: activeKey === '3' ? '政策法规' : '通知公告',
                   isActive: true
@@ -182,22 +209,36 @@ const Notice: React.FC = () => {
 
         <div className="content-area">
           <div className="title-section">
-            <Title level={2} className="content-title">
-              {activeKey === '3' ? (
-                <>
-                  <FileTextOutlined className="title-icon" /> 政策法规
-                </>
-              ) : (
-                <>
-                  <BellOutlined className="title-icon" /> 通知公告
-                </>
-              )}
-            </Title>
+            <div className="title-bar">
+              <Title level={2} className="content-title">
+                {activeKey === '3' ? (
+                  <>
+                    <FileTextOutlined className="title-icon" /> 政策法规
+                  </>
+                ) : (
+                  <>
+                    <BellOutlined className="title-icon" /> 通知公告
+                  </>
+                )}
+              </Title>
+              
+              <div className="search-container">
+                <Search
+                  placeholder="搜索标题..."
+                  allowClear
+                  enterButton={<SearchOutlined />}
+                  size="middle"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  onSearch={handleSearch}
+                />
+              </div>
+            </div>
           </div>
 
           <List
             className="notice-list"
-            dataSource={getData()}
+            dataSource={paginatedData}
             renderItem={(item) => (
               <List.Item className="notice-item">
                 <Link
@@ -209,16 +250,18 @@ const Notice: React.FC = () => {
                 <span className="notice-publishTime">{item.publishTime}</span>
               </List.Item>
             )}
+            locale={{ emptyText: '没有找到匹配的内容' }}
           />
 
           <div className="pagination-container">
             <Pagination
               current={currentPage}
-              total={getData().length}
-              pageSize={10}
+              total={filteredData.length}
+              pageSize={PAGE_SIZE}
               onChange={handlePageChange}
               showSizeChanger={false}
               showQuickJumper={false}
+              showTotal={(total) => `共 ${total} 条`}
               className="pagination"
             />
           </div>

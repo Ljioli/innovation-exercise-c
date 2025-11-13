@@ -1,21 +1,29 @@
-import React, { useState } from 'react'
-import { Card, Typography, Divider, Row, Col, Menu, Breadcrumb } from 'antd'
+import React, { useState, useEffect } from 'react'
+import {
+  Card,
+  Typography,
+  Divider,
+  Row,
+  Col,
+  Menu,
+  Input,
+  Pagination
+} from 'antd'
 import {
   ClockCircleOutlined,
   FlagOutlined,
   TrophyOutlined,
   ArrowRightOutlined,
-  HomeOutlined
+  SearchOutlined
 } from '@ant-design/icons'
 import './index.scss'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import BreadcrumbComponent from '@/components/BreadcrumbComponent'
 
 const { Title, Text, Paragraph } = Typography
-const { Item: BreadcrumbItem } = Breadcrumb
+const { Search } = Input
 
-// 定义新闻数据类型 
+// 定义新闻数据类型
 interface NewsItem {
   id: number
   title: string
@@ -28,6 +36,14 @@ interface NewsItem {
 const News: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
+
+  // 分页相关状态
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(4) // 每页显示4条
+  const [totalItems, setTotalItems] = useState(0)
+
+  // 搜索相关状态
+  const [searchText, setSearchText] = useState('')
 
   // 根据当前路由设置默认分类
   const getDefaultType = (): '1' | '2' => {
@@ -43,6 +59,9 @@ const News: React.FC = () => {
   useEffect(() => {
     const currentType = getDefaultType()
     setActiveType(currentType)
+    // 重置分页和搜索
+    setCurrentPage(1)
+    setSearchText('')
   }, [location.pathname])
 
   // 模拟新闻数据
@@ -54,7 +73,8 @@ const News: React.FC = () => {
       content:
         '国家领导人在会议上发表重要讲话，强调加强国际合作，共同应对全球挑战，推动构建人类命运共同体。',
       publishTime: '2025-09-05',
-      cover: 'https://www.gov.cn/yaowen/liebiao/202411/W020241117249768158161_ORIGIN.jpg',
+      cover:
+        'https://www.gov.cn/yaowen/liebiao/202411/W020241117249768158161_ORIGIN.jpg',
       type: '1'
     },
     {
@@ -63,7 +83,8 @@ const News: React.FC = () => {
       content:
         '本次常委会会议审议了环境保护法修订草案、数字经济促进法草案等多项重要法律案，回应社会关切。',
       publishTime: '2025-09-03',
-      cover: 'https://tse2-mm.cn.bing.net/th/id/OIP-C.Qn0Gz06jpI5aJNN8EOOzYAHaEK?w=269&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
+      cover:
+        'https://tse2-mm.cn.bing.net/th/id/OIP-C.Qn0Gz06jpI5aJNN8EOOzYAHaEK?w=269&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '1'
     },
     {
@@ -92,7 +113,8 @@ const News: React.FC = () => {
       content:
         '9月5日至12日，中华人民共和国第十五届运动会群众比赛象棋项目决赛在广东省深圳市罗湖区举行',
       publishTime: '2025-09-14',
-      cover: 'https://tse2-mm.cn.bing.net/th/id/OIP-C.5t55d8ZGeszG4d8OEnG2jAHaFC?w=239&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
+      cover:
+        'https://tse2-mm.cn.bing.net/th/id/OIP-C.5t55d8ZGeszG4d8OEnG2jAHaFC?w=239&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '2'
     },
     {
@@ -101,7 +123,8 @@ const News: React.FC = () => {
       content:
         '9月20日，2025年河北省第二届体育行业职业技能竞赛社会体育指导（健身）在石家庄市万拓体育恒大华府运动中心正式开赛。',
       publishTime: '2025-09-22',
-      cover: 'https://tse1-mm.cn.bing.net/th/id/OIP-C.ojdGvfytBn8JRAjRV1YPYgHaE8?w=261&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
+      cover:
+        'https://tse1-mm.cn.bing.net/th/id/OIP-C.ojdGvfytBn8JRAjRV1YPYgHaE8?w=261&h=180&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3',
       type: '2'
     },
     {
@@ -119,14 +142,22 @@ const News: React.FC = () => {
       content:
         '8月29日，2025年“冀农乐”第三届和美乡村“和顺杯”篮球赛（村BA）总决赛在丰宁满族自治县北园子村圆满收官。',
       publishTime: '2025-08-28',
-      cover: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.k2PjdIFLemJSoRZfaUumLAHaE7?w=266&h=180&c=7&r=0&o=5&dpr=2&pid=1.7',
+      cover:
+        'https://tse3-mm.cn.bing.net/th/id/OIP-C.k2PjdIFLemJSoRZfaUumLAHaE7?w=266&h=180&c=7&r=0&o=5&dpr=2&pid=1.7',
       type: '2'
     }
   ]
 
-  // 筛选新闻
+  // 筛选新闻 - 增加搜索过滤
   const filteredNews = newsData
     .filter((item) => item.type === activeType)
+    .filter((item) => {
+      const searchLower = searchText.toLowerCase()
+      return (
+        item.title.toLowerCase().includes(searchLower) ||
+        item.content.toLowerCase().includes(searchLower)
+      )
+    })
     // 按日期倒序
     .sort((a, b) => {
       return (
@@ -134,10 +165,36 @@ const News: React.FC = () => {
       )
     })
 
+  // 处理分页逻辑
+  useEffect(() => {
+    setTotalItems(filteredNews.length)
+    // 当筛选结果变化时重置到第一页
+    setCurrentPage(1)
+  }, [filteredNews])
+
+  // 获取当前页的新闻
+  const currentNews = filteredNews.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  )
+
   // 处理菜单点击
   const handleMenuClick = (type: '1' | '2') => {
     const route = type === '1' ? 'politics' : 'sports'
     navigate(`/news/${route}`)
+  }
+
+  // 处理搜索
+  const handleSearch = (value: string) => {
+    setSearchText(value)
+    setCurrentPage(1) // 搜索时重置到第一页
+  }
+
+  // 处理分页变化
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page)
+    // 滚动到页面顶部
+    window.scrollTo(0, 0)
   }
 
   return (
@@ -187,61 +244,95 @@ const News: React.FC = () => {
           />
 
           <div className="page-title">
-            <Title level={3}>
-              {activeType === '1' ? '时政新闻' : '热门赛事'}
-            </Title>
+            <div className="title-bar">
+              <Title level={3}>
+                {activeType === '1' ? '时政新闻' : '热门赛事'}
+              </Title>
+
+              {/* 搜索框移动到这里 */}
+              <div className="news-search">
+                <Search
+                  placeholder="搜索标题或内容"
+                  allowClear
+                  enterButton={<SearchOutlined />}
+                  size="middle"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  onSearch={handleSearch}
+                />
+              </div>
+            </div>
             <Divider />
           </div>
 
           <div className="news-list">
-            {filteredNews.map((news) => (
-              <Link
-                key={news.id}
-                to={`/news/${activeType === '1' ? 'politics' : 'sports'}/${news.id}`}
-              >
-                <Card key={news.id} className="news-item" hoverable>
-                  <Row gutter={[24, 0]}>
-                    <Col xs={24} md={8} lg={7}>
-                      <div className="news-image-container">
-                        <img
-                          src={news.cover}
-                          alt={news.title}
-                          className="news-image"
-                        />
-                      </div>
-                    </Col>
-
-                    <Col xs={24} md={16} lg={17}>
-                      <div className="news-info">
-                        <div className="news-header">
-                          <Title level={4} className="news-title">
-                            {news.title}
-                          </Title>
+            {currentNews.length > 0 ? (
+              currentNews.map((news) => (
+                <Link
+                  key={news.id}
+                  to={`/news/${activeType === '1' ? 'politics' : 'sports'}/${news.id}`}
+                >
+                  <Card key={news.id} className="news-item" hoverable>
+                    <Row gutter={[24, 0]}>
+                      <Col xs={24} md={8} lg={7}>
+                        <div className="news-image-container">
+                          <img
+                            src={news.cover}
+                            alt={news.title}
+                            className="news-image"
+                          />
                         </div>
+                      </Col>
 
-                        <Paragraph
-                          className="news-summary"
-                          ellipsis={{ rows: 2 }}
-                        >
-                          {news.content}
-                        </Paragraph>
-
-                        <div className="news-meta">
-                          <div className="news-date">
-                            <ClockCircleOutlined />
-                            <Text>{news.publishTime}</Text>
+                      <Col xs={24} md={16} lg={17}>
+                        <div className="news-info">
+                          <div className="news-header">
+                            <Title level={4} className="news-title">
+                              {news.title}
+                            </Title>
                           </div>
-                          <a href={`#/news/${news.id}`} className="read-more">
-                            阅读全文 <ArrowRightOutlined />
-                          </a>
+
+                          <Paragraph
+                            className="news-summary"
+                            ellipsis={{ rows: 2 }}
+                          >
+                            {news.content}
+                          </Paragraph>
+
+                          <div className="news-meta">
+                            <div className="news-date">
+                              <ClockCircleOutlined />
+                              <Text>{news.publishTime}</Text>
+                            </div>
+                            <a href={`#/news/${news.id}`} className="read-more">
+                              阅读全文 <ArrowRightOutlined />
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card>
-              </Link>
-            ))}
+                      </Col>
+                    </Row>
+                  </Card>
+                </Link>
+              ))
+            ) : (
+              <div className="no-news">
+                <p>没有找到匹配的新闻</p>
+              </div>
+            )}
           </div>
+
+          {/* 分页器 */}
+          {totalItems && (
+            <div className="news-pagination">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={totalItems}
+                onChange={handlePageChange}
+                showTotal={(total) => `共 ${total} 条新闻`}
+              />
+            </div>
+          )}
         </Card>
       </Col>
     </Row>
