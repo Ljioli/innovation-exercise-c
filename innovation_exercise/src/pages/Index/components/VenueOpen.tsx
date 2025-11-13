@@ -14,11 +14,11 @@ const VenueOpen: React.FC = () => {
   const venueTypes: TabsProps['items'] = [
     {
       key: '1',
-      label: '公共体育场'
+      label: '公共体育馆'
     },
     {
       key: '2',
-      label: '公共体育馆'
+      label: '公共体育场'
     },
     {
       key: '3',
@@ -42,7 +42,7 @@ const VenueOpen: React.FC = () => {
   const venueData = [
     {
       id: 1,
-      type: '2',
+      type: '1',
       url: 'https://js365.org.cn/oss/js365/js365/upload/20220620/13117c9a27f940fb9095307d386a8be6.jpg',
       name: '石家庄市新华区文体中心体育综合馆',
       location: '河北省·石家庄市',
@@ -50,7 +50,7 @@ const VenueOpen: React.FC = () => {
     },
     {
       id: 2,
-      type: '2',
+      type: '1',
       url:'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
       name: '河北体育馆',
       location: '河北省石家庄市长安区广安街道中山东路338号',
@@ -58,7 +58,7 @@ const VenueOpen: React.FC = () => {
     },
     {
       id: 3,
-      type: '2',
+      type: '1',
       url:'https://js365.org.cn/oss/js365/js365/upload/20220621/e76e1aa77d184d6bbaa643c4d32b2192.jpg',
       name: '石家庄滑冰馆',
       location: '河北省石家庄市长安区育才街道中山东路350号',
@@ -66,7 +66,7 @@ const VenueOpen: React.FC = () => {
     },
     {
       id: 4,
-      type: '2',
+      type: '1',
       url:'https://www.js365.org.cn/oss/js365/upload/20240725/fc5c888aeb514a94884f49f631d50ff9.jpg',
       name: '石家庄市中山体育馆',
       location: '河北省石家庄市桥西区维明街道自强路117号',
@@ -74,7 +74,7 @@ const VenueOpen: React.FC = () => {
     },
     {
       id: 5,
-      type: '2',
+      type: '1',
       url:'https://js365.org.cn/oss/js365/js365/upload/20220714/d019cb5abda14242bfa92345e200bfd8.png',
       name: '栾城区体育馆',
       location: '河北省石家庄市栾城区栾城镇街道惠源路39号',
@@ -82,7 +82,7 @@ const VenueOpen: React.FC = () => {
     },
     {
       id: 6,
-      type: '2',
+      type: '1',
       url:'https://www.js365.org.cn/oss/js365/upload/20230717/b0ccdc0d860e4396985a3025b342d0f6.jpg',
       name: '高新区气膜体育馆',
       location: '河北省石家庄市石家庄高新技术产业开发区',

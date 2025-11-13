@@ -484,7 +484,17 @@ const qualityCoverageOption: echarts.EChartsOption = {
     type: 'value',
     name: '服务半径覆盖率(%)',
     min: 70,
-    max: 95
+    max: 95,
+    nameLocation: 'middle',
+    nameGap: 30,  
+    nameTextStyle: {
+      fontSize: 12,    
+      padding: [0, 0, 10, 0]
+    },
+    // 调整坐标轴标签样式
+    axisLabel: {
+      fontSize: 10
+    }
   },
   yAxis: {
     type: 'value',

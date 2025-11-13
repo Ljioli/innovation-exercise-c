@@ -79,7 +79,7 @@ const allVideos = [
     duration: '25:15',
     difficulty: '高级',
     videoPath: require('@/assets/video/huqiu.MP4'),
-    thumbnail: 'https://tse1-mm.cn.bing.net/th/id/OIP-C._8k2bY9b5Yk2bX1Z3Y6aWgHaEK?w=327&h=185&c=7&r=0&o=5&dpr=2&pid=1.7'
+    thumbnail: 'https://tse1-mm.cn.bing.net/th/id/OIP-C.SB1pIXpaQTIQCHHdf4oELQHaEK?w=329&h=185&c=7&r=0&o=7&dpr=2&pid=1.7&rm=3'
   }
 ];
 
@@ -161,7 +161,7 @@ const GuideDetail: React.FC = () => {
             <div className="video-grid">
               <Row gutter={[16, 24]}>
                 {filteredVideos.map((video) => (
-                  <Col xs={24} sm={12} md={8} lg={8} xl={6} key={video.id}>
+                  <Col xs={8} sm={8} md={8} lg={8} xl={8} key={video.id}>
                     <Card
                       hoverable
                       className="video-card"

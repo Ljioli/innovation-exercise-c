@@ -10,7 +10,7 @@ import {
   Pagination,
   Tag
 } from 'antd'
-import { ClockCircleOutlined, EnvironmentOutlined } from '@ant-design/icons'
+import { EnvironmentOutlined,ClockCircleOutlined } from '@ant-design/icons'
 
 import './venueOpen.scss'
 
@@ -28,12 +28,13 @@ interface Venue {
   image: string
   province: string
   city: string
+  district: string  // 新增区属性
   operator?: string
   year?: string
   area?: string
 }
 
-// 模拟场馆数据
+// 河北省内场馆数据
 const venueData: Venue[] = [
   {
     id: 1,
@@ -45,6 +46,7 @@ const venueData: Venue[] = [
     image: 'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '长安区',
     operator: '河北省体育局',
     year: '2005',
     area: '25000'
@@ -52,13 +54,14 @@ const venueData: Venue[] = [
   {
     id: 2,
     name: '高邑县公共体育馆',
-    address: '河北省石家庄市高邑县高邑镇乡镇北关村太行路152号',
+    address: '石家庄市高邑县高邑镇北关村太行路152号',
     openingHours: '全天开放',
     phone: '0311-86688888',
     type: '户外健身区',
     image: 'https://js365.org.cn/oss/js365/js365/upload/20220624/02dcf9ebd3124dbea6c12190a8558371.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '高邑县',
     operator: '石家庄市市政管理处',
     year: '2010',
     area: '8000'
@@ -66,13 +69,14 @@ const venueData: Venue[] = [
   {
     id: 3,
     name: '石家庄市新华区文体中心体育综合馆',
-    address: '河北省石家庄市新华区北苑街道钟旺路15号',
+    address: '石家庄市新华区北苑街道钟旺路15号',
     openingHours: '08:00-21:00',
     phone: '010-84375088',
     type: '综合体育馆',
     image: 'https://js365.org.cn/oss/js365/js365/upload/20220620/13117c9a27f940fb9095307d386a8be6.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '新华区',
     operator: '石家庄市市政管理处',
     year: '2005',
     area: '25000'
@@ -80,13 +84,14 @@ const venueData: Venue[] = [
   {
     id: 4,
     name: '石家庄市鹿泉区篮球馆',
-    address: '河北省石家庄市鹿泉区获鹿镇乡乡镇向阳大街街213号',
+    address: '石家庄市鹿泉区获鹿镇向阳大街213号',
     openingHours: '07:30-22:00',
     phone: '021-64385200',
     type: '综合体育馆',
     image: 'https://js365.org.cn/oss/js365/js365/upload/20220621/e76e1aa77d184d6bbaa643c4d32b2192.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '鹿泉区',
     operator: '石家庄市市政管理处',
     year: '2005',
     area: '25000'
@@ -94,13 +99,14 @@ const venueData: Venue[] = [
   {
     id: 5,
     name: '石家庄市中山体育馆',
-    address: '河北省石家庄市桥西区维明街道自强路117号',
+    address: '石家庄市桥西区维明街道自强路117号',
     openingHours: '06:30-22:30',
     phone: '020-85678900',
     type: '体育中心',
     image: 'https://www.js365.org.cn/oss/js365/upload/20240725/fc5c888aeb514a94884f49f631d50ff9.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '桥西区',
     operator: '石家庄市市政管理处',
     year: '2005',
     area: '25000'
@@ -108,13 +114,14 @@ const venueData: Venue[] = [
   {
     id: 6,
     name: '赞皇县体育馆',
-    address: '河北省石家庄市赞皇县西龙门乡镇布古庄村二中南邻',
+    address: '石家庄市赞皇县西龙门乡布古庄村二中南邻',
     openingHours: '07:00-22:00',
     phone: '0755-86308888',
     type: '体育中心',
     image: 'https://js365.org.cn/oss/js365/upload/2021/05/13/85baf517-0e5d-41ad-aaa2-8ad4a87cde17.jpg',
-    province: '广东省',
+    province: '河北省',
     city: '石家庄市',
+    district: '赞皇县',
     operator: '石家庄市市政管理处',
     year: '2011',
     area: '307000'
@@ -122,145 +129,125 @@ const venueData: Venue[] = [
   {
     id: 7,
     name: '新乐市体育馆',
-    address: '河北省石家庄市新乐市长寿街道育才街街8号',
+    address: '石家庄市新乐市长寿街道育才街8号',
     openingHours: '08:00-21:30',
     phone: '028-86616566',
     type: '体育场',
     image: 'https://www.js365.org.cn/oss/js365/upload/20240723/ec4d3d79f31b44438170cf922be31781.jpg',
     province: '河北省',
     city: '石家庄市',
+    district: '新乐市',
     operator: '石家庄市市政管理处',
     year: '2005',
     area: '25000'
   },
   {
     id: 8,
-    name: '石家庄市鹿泉区篮球馆',
-    address: '河北省石家庄市鹿泉区获鹿镇乡乡镇向阳大街街213号',
-    openingHours: '07:30-22:00',
-    phone: '027-84750000',
+    name: '唐山市体育中心',
+    address: '唐山市路南区卫国南路11号',
+    openingHours: '08:00-22:00',
+    phone: '0315-2825678',
     type: '体育中心',
-    image: 'https://js365.org.cn/oss/js365/upload/2021/04/30/e25f5112-02e2-4f62-a3f0-4a7914a528c7.jpg',
-    province: '湖北省',
-    city: '武汉市',
-    operator: '武汉市体育局',
-    year: '2002',
-    area: '158000'
+    image: 'https://picsum.photos/400/200?random=8',
+    province: '河北省',
+    city: '唐山市',
+    district: '路南区',
+    operator: '唐山市体育局',
+    year: '2012',
+    area: '180000'
   },
   {
     id: 9,
-    name: '南京奥体中心',
-    address: '南京市建邺区江东中路222号',
-    openingHours: '08:00-21:00',
-    phone: '025-86690000',
+    name: '秦皇岛市奥体中心',
+    address: '秦皇岛市海港区河北大街西段',
+    openingHours: '07:30-21:00',
+    phone: '0335-8051234',
     type: '体育中心',
     image: 'https://picsum.photos/400/200?random=9',
-    province: '江苏省',
-    city: '南京市',
-    operator: '南京市体育局',
-    year: '2005',
+    province: '河北省',
+    city: '秦皇岛市',
+    district: '海港区',
+    operator: '秦皇岛市体育局',
+    year: '2004',
     area: '400000'
   },
   {
     id: 10,
-    name: '杭州体育馆',
-    address: '杭州市下城区体育场路210号',
+    name: '邯郸市体育馆',
+    address: '邯郸市丛台区中华北大街21号',
     openingHours: '07:00-22:00',
-    phone: '0571-85153999',
+    phone: '0310-3026789',
     type: '体育馆',
     image: 'https://picsum.photos/400/200?random=10',
-    province: '浙江省',
-    city: '杭州市',
-    operator: '杭州市体育局',
-    year: '1966',
+    province: '河北省',
+    city: '邯郸市',
+    district: '丛台区',
+    operator: '邯郸市体育局',
+    year: '1998',
     area: '73000'
   },
   {
     id: 11,
-    name: '重庆奥体中心',
-    address: '重庆市九龙坡区谢陈路1号',
+    name: '保定市体育馆',
+    address: '保定市竞秀区东风西路109号',
     openingHours: '08:00-21:30',
-    phone: '023-68668888',
+    phone: '0312-3034567',
     type: '体育中心',
     image: 'https://picsum.photos/400/200?random=11',
-    province: '重庆市',
-    city: '重庆市',
-    operator: '重庆市体育局',
-    year: '2004',
+    province: '河北省',
+    city: '保定市',
+    district: '竞秀区',
+    operator: '保定市体育局',
+    year: '2008',
     area: '135000'
   },
   {
     id: 12,
-    name: '青岛体育中心',
-    address: '青岛市崂山区银川东路3号',
+    name: '张家口市全民健身中心',
+    address: '张家口市桥东区胜利中路2号',
     openingHours: '07:30-22:00',
-    phone: '0532-88611111',
-    type: '体育中心',
+    phone: '0313-4038910',
+    type: '综合体育馆',
     image: 'https://picsum.photos/400/200?random=12',
-    province: '山东省',
-    city: '青岛市',
-    operator: '青岛市体育局',
-    year: '2009',
-    area: '280000'
+    province: '河北省',
+    city: '张家口市',
+    district: '桥东区',
+    operator: '张家口市体育局',
+    year: '2010',
+    area: '28000'
   },
   {
     id: 13,
-    name: '西安城市体育馆',
-    address: '西安市未央区凤城八路168号',
-    openingHours: '08:00-21:00',
-    phone: '029-86402222',
-    type: '体育馆',
-    image: 'https://picsum.photos/400/200?random=13',
-    province: '陕西省',
-    city: '西安市',
-    operator: '西安市体育局',
-    year: '2017',
-    area: '88000'
+    name: '张家口市全民健身中心',
+    address: '张家口市桥东区胜利中路2号',
+    openingHours: '07:30-22:00',
+    phone: '0313-4038910',
+    type: '综合体育馆',
+    image: 'https://picsum.photos/400/200?random=12',
+    province: '河北省',
+    city: '张家口市',
+    district: '桥东区',
+    operator: '张家口市体育局',
+    year: '2010',
+    area: '28000'
   },
-  {
-    id: 14,
-    name: '沈阳奥体中心',
-    address: '沈阳市浑南区营盘西街10号',
-    openingHours: '07:30-21:30',
-    phone: '024-24822222',
-    type: '体育中心',
-    image: 'https://picsum.photos/400/200?random=14',
-    province: '辽宁省',
-    city: '沈阳市',
-    operator: '沈阳市体育局',
-    year: '2007',
-    area: '258000'
-  },
-  {
-    id: 15,
-    name: '哈尔滨国际会展体育中心',
-    address: '哈尔滨市南岗区红旗大街301号',
-    openingHours: '08:00-21:00',
-    phone: '0451-82273333',
-    type: '体育中心',
-    image: 'https://picsum.photos/400/200?random=15',
-    province: '黑龙江省',
-    city: '哈尔滨市',
-    operator: '哈尔滨市体育局',
-    year: '2004',
-    area: '330000'
-  }
 ]
+
 
 const VenueOpen: React.FC = () => {
   // 筛选状态
-  const [province, setProvince] = React.useState('全部')
   const [city, setCity] = React.useState('全部')
+  const [district, setDistrict] = React.useState('全部')
   const [venueType, setVenueType] = React.useState('全部场馆')
   const [searchText, setSearchText] = React.useState('')
   // 分页状态
   const [currentPage, setCurrentPage] = React.useState(1)
   const pageSize = 12 // 每页12个
 
-  // 省选择变化
-  const handleProvinceChange = (value: string) => {
-    setProvince(value)
-    setCity('全部') // 切换省时重置市
+  // 市选择变化
+  const handleCityChange = (value: string) => {
+    setCity(value)
+    setDistrict('全部') // 切换市时重置区
     setCurrentPage(1) // 切换筛选条件时重置到第一页
   }
 
@@ -282,18 +269,18 @@ const VenueOpen: React.FC = () => {
     (venue) => venueType === '全部场馆' || venue.type === venueType
   )
 
-  // 筛选省份
-  const filteredByProvince = filteredByType.filter(
-    (venue) => province === '全部' || venue.province === province
-  )
-
   // 筛选城市
-  const filteredByCity = filteredByProvince.filter(
+  const filteredByCity = filteredByType.filter(
     (venue) => city === '全部' || venue.city === city
   )
 
+  // 筛选区
+  const filteredByDistrict = filteredByCity.filter(
+    (venue) => district === '全部' || venue.district === district
+  )
+
   // 搜索筛选
-  const filteredVenues = filteredByCity.filter((venue) =>
+  const filteredVenues = filteredByDistrict.filter((venue) =>
     venue.name.toLowerCase().includes(searchText.toLowerCase())
   )
 
@@ -309,46 +296,49 @@ const VenueOpen: React.FC = () => {
     ...Array.from(new Set(venueData.map((v) => v.type)))
   ]
 
+  // 获取所有可用的城市
+  const allCities = [
+    '全部',
+    ...Array.from(new Set(venueData.map((v) => v.city)))
+  ]
+
   return (
     <div className="venue-open-page">
       {/* 筛选栏 */}
       <div className="filter-bar">
         <div className="filter-item">
-          <span className="filter-label">省：</span>
-          <Select
-            value={province}
-            style={{ width: 120 }}
-            onChange={handleProvinceChange}
-          >
-            <Option value="全部">全部</Option>
-            {Array.from(new Set(venueData.map((v) => v.province))).map(
-              (prov) => (
-                <Option key={prov} value={prov}>
-                  {prov}
-                </Option>
-              )
-            )}
-          </Select>
-        </div>
-
-        <div className="filter-item">
           <span className="filter-label">市：</span>
           <Select
             value={city}
             style={{ width: 120 }}
-            onChange={(val) => setCity(val)}
+            onChange={handleCityChange}
+          >
+            {allCities.map((cityItem) => (
+              <Option key={cityItem} value={cityItem}>
+                {cityItem}
+              </Option>
+            ))}
+          </Select>
+        </div>
+
+        <div className="filter-item">
+          <span className="filter-label">区：</span>
+          <Select
+            value={district}
+            style={{ width: 120 }}
+            onChange={(val) => setDistrict(val)}
           >
             <Option value="全部">全部</Option>
-            {province !== '全部' &&
+            {city !== '全部' &&
               Array.from(
                 new Set(
                   venueData
-                    .filter((v) => v.province === province)
-                    .map((v) => v.city)
+                    .filter((v) => v.city === city)
+                    .map((v) => v.district)
                 )
-              ).map((city) => (
-                <Option key={city} value={city}>
-                  {city}
+              ).map((districtItem) => (
+                <Option key={districtItem} value={districtItem}>
+                  {districtItem}
                 </Option>
               ))}
           </Select>

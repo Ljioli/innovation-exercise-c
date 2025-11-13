@@ -381,7 +381,7 @@ const KnowledgeGraph: React.FC = () => {
   return (
     <div className="knowledge-graph-container">
       {/* 头部 */}
-      <div className="header">
+      <div className="knowledge-graph-header">
         <Title level={2} className="header-title">河北省全民健身时空知识图谱</Title>
         <Paragraph className="header-subtitle">基于熵权-TOPSIS法的综合评价模型可视化分析</Paragraph>
       </div>

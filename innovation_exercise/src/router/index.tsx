@@ -13,6 +13,7 @@ const VenueVisualization = lazy(() => import('@/pages/Resource/venueVisualizatio
 const VenueDetail = lazy(() => import('@/pages/Resource/venueDetail'))
 // const FitnessCommunity = lazy(() => import('@/pages/Community/fitnessCommunity'))
 const IntelligentQA = lazy(() => import('@/pages/Qa/intelligentQA'))
+const ProblemFeedback = lazy(() => import('@/pages/Qa/problemFeedback'))
 const KnowledgeGraph = lazy(() => import('@/pages/KnowledgeGraph/knowledgeGraph'))
 const ExerciseGuide = lazy(() => import('@/pages/Index/components/components/GuideDetail'))
 
@@ -152,13 +153,26 @@ const routes: RouteObject[] = [
       //     </Suspense>
       //   )
       // },
-      {
+            {
         path: 'qa',
-        element: (
-          <Suspense fallback={'加载中'}>
-            <IntelligentQA />
-          </Suspense>
-        )
+        children: [ 
+          {
+            path: 'intelligentQA',
+            element: (
+              <Suspense fallback={'加载中'}>
+                <IntelligentQA />
+              </Suspense>
+            )
+          },
+          {
+            path: 'problemFeedback',
+            element: (
+              <Suspense fallback={'加载中'}>
+                <ProblemFeedback />
+              </Suspense>
+            )
+          },
+        ]
       },
       {
         path: 'knowledge-graph',

@@ -79,8 +79,18 @@ const allItems: MenuItem[] = [
   //   key: '5'
   // },
   {
-    label: <Link to="/qa"> 智能问答</Link>,
-    key: '5'
+    label: '问答咨询',
+    key: '5',
+    children: [
+      {
+        label: <Link to="/qa/intelligentQA"> 智能问答</Link>,
+        key: '5-1'
+      },
+      {
+        label: <Link to="/qa/problemFeedback"> 问题反馈</Link>,
+        key: '5-2'
+      },
+    ]
   },
     {
     label: <Link to="/knowledge-graph"> 知识图谱</Link>,
@@ -112,8 +122,10 @@ const NavComponent: React.FC<NavComponentProps> = ({ showAll = false }) => {
         return '4-2'
       case '/resource/score-visualization':
         return '4-3'
-      case '/qa':
-        return '5'
+      case '/qa/intelligentQA':
+        return '5-1'
+      case '/qa/problemFeedback':
+        return '5-2'
       case '/knowledge-graph':
         return '6'
       case '/user':

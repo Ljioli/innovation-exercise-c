@@ -1,75 +1,86 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Card, Row, Col, Typography, Table, Descriptions } from 'antd';
+import React, { useState, useRef, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import {
+  Card,
+  Row,
+  Col,
+  Typography,
+  Table,
+  Descriptions,
+  Button,
+  Space,
+  Form,
+  Input
+} from 'antd'
 import {
   ClockCircleOutlined,
   EnvironmentOutlined,
   PhoneOutlined,
   TeamOutlined,
   StarOutlined
-} from '@ant-design/icons';
-import './venueDetail.scss';
-import VenueMap from './components/VenueMap';
-import RatingDetail from './components/RatingDetail';
+} from '@ant-design/icons'
+import './venueDetail.scss'
+import VenueMap from './components/VenueMap'
+import RatingDetail from './components/RatingDetail'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 // 引入基础的Venue接口定义
 interface Venue {
-  id: number;
-  name: string;
-  address: string;
-  openingHours: string;
-  phone: string;
-  type: string;
-  image: string;
-  province: string;
-  city: string;
-  operator?: string;
-  year?: string;
-  area?: string;
+  id: number
+  name: string
+  address: string
+  openingHours: string
+  phone: string
+  type: string
+  image: string
+  province: string
+  city: string
+  operator?: string
+  year?: string
+  area?: string
 }
 
 // 扩展场馆数据类型
 interface VenueDetail extends Venue {
-  outerFreeArea?: string;
-  venueArea?: string;
-  outerArea?: string;
-  outerFreeCount?: string;
-  coreFreeArea?: string;
-  hasOutdoorArea?: string;
-  coreArea?: string;
-  coreFreeCount?: string;
-  landArea?: string;
-  seatNum?: string;
-  superior?: string;
-  description?: string;
-  facilities?: Facility[];
+  outerFreeArea?: string
+  venueArea?: string
+  outerArea?: string
+  outerFreeCount?: string
+  coreFreeArea?: string
+  hasOutdoorArea?: string
+  coreArea?: string
+  coreFreeCount?: string
+  landArea?: string
+  seatNum?: string
+  superior?: string
+  description?: string
+  facilities?: Facility[]
 }
 
 // 设施数据类型
 interface Facility {
-  id: number;
-  name: string;
-  image: string;
-  quantity: number;
-  availableCount: number;
-  type: string;
-  lastCheck?: string;
+  id: number
+  name: string
+  image: string
+  quantity: number
+  availableCount: number
+  type: string
+  lastCheck?: string
 }
 
 // 评分指标类型
 export interface RatingIndicator {
-  name: string;
-  score: number;
-  weight: number;
-  description: string;
+  name: string
+  score: number
+  weight: number
+  description: string
 }
 
 // 评分数据类型
 export interface RatingData {
-  overall: number;
-  indicators: RatingIndicator[];
+  overall: number
+  indicators: RatingIndicator[]
 }
 
 // 模拟场馆详情数据
@@ -81,7 +92,8 @@ const mockVenueDetails: Record<number, VenueDetail> = {
     openingHours: '06:00-22:00',
     phone: '0311-85918888',
     type: '综合体育馆',
-    image: 'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
+    image:
+      'https://js365.org.cn/oss/js365/upload/2021/10/12/f5de89a3-a29d-44ca-8e62-677e82c5b6fe.jpg',
     province: '河北省',
     city: '石家庄市',
     operator: '河北省体育局',
@@ -195,59 +207,59 @@ const mockVenueDetails: Record<number, VenueDetail> = {
       }
     ]
   }
-};
+}
 
 const VenueDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const venueId = id ? parseInt(id, 10) : 1;
-  const venue = mockVenueDetails[venueId] || mockVenueDetails[1];
-  const [ratingVisible, setRatingVisible] = useState(false);
+  const { id } = useParams<{ id: string }>()
+  const venueId = id ? parseInt(id, 10) : 1
+  const venue = mockVenueDetails[venueId] || mockVenueDetails[1]
+  const [ratingVisible, setRatingVisible] = useState(false)
 
   // 场馆评分数据
   const ratingData: RatingData = {
     overall: 4.7,
     indicators: [
-      { 
-        name: '设施完善度', 
-        score: 4.8, 
+      {
+        name: '设施完善度',
+        score: 4.8,
         weight: 30,
         description: '评估场馆设施的完整性、先进性和维护状况'
       },
-      { 
-        name: '服务质量', 
-        score: 4.5, 
+      {
+        name: '服务质量',
+        score: 4.5,
         weight: 25,
         description: '评估场馆工作人员服务态度和专业水平'
       },
-      { 
-        name: '场地条件', 
-        score: 4.9, 
+      {
+        name: '场地条件',
+        score: 4.9,
         weight: 20,
         description: '评估场地大小、采光、通风等物理条件'
       },
-      { 
-        name: '开放时间合理性', 
-        score: 4.6, 
+      {
+        name: '开放时间合理性',
+        score: 4.6,
         weight: 15,
         description: '评估开放时间是否满足市民健身需求'
       },
-      { 
-        name: '交通便利性', 
-        score: 4.4, 
+      {
+        name: '交通便利性',
+        score: 4.4,
         weight: 10,
         description: '评估场馆的交通可达性和停车条件'
       }
     ]
-  };
+  }
 
   // 计算总分（用于演示计算过程）
   const calculateOverallScore = () => {
     const total = ratingData.indicators.reduce(
-      (sum, item) => sum + (item.score * item.weight / 100), 
+      (sum, item) => sum + (item.score * item.weight) / 100,
       0
-    );
-    return total.toFixed(1);
-  };
+    )
+    return total.toFixed(1)
+  }
 
   // 设施表格列定义
   const facilityColumns = [
@@ -284,7 +296,7 @@ const VenueDetail: React.FC = () => {
       dataIndex: 'lastCheck',
       key: 'lastCheck'
     }
-  ];
+  ]
 
   // 基本信息描述列表项
   const basicInfoItems = [
@@ -378,7 +390,7 @@ const VenueDetail: React.FC = () => {
       children: venue.superior || '未知',
       span: 1
     }
-  ];
+  ]
 
   return (
     <div className="venue-detail-page">
@@ -402,10 +414,10 @@ const VenueDetail: React.FC = () => {
               <Title level={2} className="venue-name">
                 {venue.name}
               </Title>
-              
+
               {/* 评分显示区域 */}
-              <div 
-                className="rating-display" 
+              <div
+                className="rating-display"
                 onClick={() => setRatingVisible(true)}
               >
                 <div className="rating-value">
@@ -478,7 +490,7 @@ const VenueDetail: React.FC = () => {
         <VenueMap venueName={venue.name} />
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default VenueDetail;
+export default VenueDetail

@@ -1,7 +1,7 @@
-$primary-color: #1890ff;
+$primary-color: #e7c553;
 $accent-color: #13c2c2;
-$dark-bg: #0a325d;
-$glass-bg: rgba(255, 255, 255, 0.08);
+$dark-bg: #16a8c2;
+$glass-bg: rgba(255, 255, 255, 0.15);
 $glass-border: rgba(255, 255, 255, 0.2);
 $text-primary: #ffffff;
 $text-secondary: rgba(255, 255, 255, 0.8);
@@ -130,7 +130,7 @@ $text-secondary: rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.05);
     border-radius: 6px;
     border-left: 3px solid $accent-color;
-    font-family: monospace;
+    font-weight: 600;
   }
 }
 
